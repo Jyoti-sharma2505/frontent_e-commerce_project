@@ -1,0 +1,250 @@
+.card {
+  height: 350px; /* card ki fixed height */
+  display: flex;
+  align-items: center; /* image ko vertical center me lana */
+  justify-content: center; /* horizontal center */
+  background: #f8f9fa;
+  overflow: hidden; /* extra content cut ho jaye */
+}
+
+.card img {
+  height: 100%;   /* card ke height ke andar fit rahe */
+  width: 100%;    /* card ke width ke andar fit rahe */
+  object-fit: cover; 
+   display: block; 
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+  /* Hover Effect */
+  .card:hover img {
+    transform: scale(1.05); /* thoda zoom */
+    filter: brightness(80%); /* thoda dark */
+  }
+
+  /* Text Overlay */
+  .card-body {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.4); /* halka sa transparent background */
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .card-text {
+    font-size: 14px;
+    font-size: 1rem;
+  line-height: 1.6;
+  color: #6c757d;
+  margin: 0;
+  }
+ .custom-card {
+  max-width: 100%;
+  height: 300px;                 /* total card height */
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;         /* stack image and text vertically */
+  justify-content: flex-start;    /* start from top */
+  align-items: center;            /* center horizontally */
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-box {
+  width: 100%;
+  height: 70%;                   /* image takes 70% of card */
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+}
+
+.img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.custom-card h6 {
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.custom-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.custom-card {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  text-align: center;
+}
+
+.custom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.img-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.like-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: rgba(163, 42, 42, 0.9);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  z-index: 2;
+}
+
+.like-btn:hover {
+  background: #ff4d6d;
+  color: white;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.img-box:hover .overlay {
+  opacity: 1;
+}
+
+.cart-btn {
+  background: #ff4d6d;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.cart-btn:hover {
+  background: #d93b57;
+}
+
+.filter-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.product-card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  text-align: center;
+  background: #fff;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.img-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-box img {
+  height: 250px;
+  width: 100%;
+  object-fit: contain;
+  background: #f8f9fa;
+  padding: 10px;
+}
+
+.like-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  z-index: 2;
+}
+
+.like-btn:hover {
+  background: #ff4d6d;
+  color: white;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.img-box:hover .overlay {
+  opacity: 1;
+}
+
+.cart-btn {
+  background: #ff4d6d;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.cart-btn:hover {
+  background: #d93b57;
+}
+
+
