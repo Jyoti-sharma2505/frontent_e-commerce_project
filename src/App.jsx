@@ -4,10 +4,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import Header from "./components/Header";
 import { EcommerceContextProvider } from "./contexts/EcommerceContext";
 import Home from "./pages/Home";
-import ProductList from "./pages/productList";
 import ProductCart from "./pages/ProductCart";
 import ProductDetails from "./pages/ProductDetails";
 import Whislsit from "./pages/Whislist";
+import ProductList from "./pages/productList";
 
 function App() {
   return (
