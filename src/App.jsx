@@ -1,13 +1,12 @@
 // import './App.css'
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import Header from "./components/Header";
 import { EcommerceContextProvider } from "./contexts/EcommerceContext";
 import Home from "./pages/Home";
 import ProductCart from "./pages/ProductCart";
 import ProductDetails from "./pages/ProductDetails";
 import Whislsit from "./pages/Whislist";
-import ProductList from "./pages/productList";
+import ProductList from "./pages/ProductList";
 
 function App() {
   return (
