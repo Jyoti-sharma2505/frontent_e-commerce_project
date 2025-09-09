@@ -20,26 +20,9 @@ const brands = [
 ];
 
 const Home = () => {
-  const [filter, setFilter] = useState("ALL");
+  //   const [filter, setFilter] = useState("ALL");
   const { filterHandleEvent, handleSubmit, handleWish, loading, error } =
     useEcommerceContext();
-  //   const { data, loading, error } = useFetch(
-  //     "https://backend-e-commerce-project.vercel.app/products"
-  //   );
-
-  //   const filterHandle = data?.getAll?.filter((list) => filter === "All" || list?.subCategory === filter)
-
-  // //   const handleEventWomen = () => {
-  // //     const filterList = data.getAll.filter(
-  // //       (list) => list.subCategory === "Women"
-  // //     );
-  // //     console.log(filterList);
-  // //   };
-
-  //   const handleEventMen = () => {
-  //     const filterMen = data.getAll.filter((list) => list.subCategory === "Men");
-  //     console.log(filterMen);
-  //   };
   return (
     <>
       <Header />
@@ -82,7 +65,10 @@ const Home = () => {
             aria-label="Slide 5"
           ></button>
         </div>
-        <div class="carousel-inner " style={{ height: "800px" }}>
+        <div
+          class="carousel-inner "
+          style={{ height: "800px", minHeight: "400px" }}
+        >
           <div className="carousel-item active">
             <img
               src="https://i.pinimg.com/1200x/0b/95/59/0b955953bd4e9c197a911474aaf3476e.jpg"
@@ -100,6 +86,7 @@ const Home = () => {
               style={{
                 top: "30%",
                 transform: "translateY(-50%)",
+                padding: "0 10px",
               }}
             >
               <h2
@@ -137,8 +124,9 @@ const Home = () => {
             <div
               className="carousel-caption d-flex flex-column justify-content-center align-items-center"
               style={{
-                top: "30%",
+                top: "50%",
                 transform: "translateY(-50%)",
+                padding: "0 10px",
               }}
             >
               <h2
@@ -171,8 +159,9 @@ const Home = () => {
             <div
               className="carousel-caption d-flex flex-column justify-content-center align-items-center"
               style={{
-                top: "30%",
+                top: "50%",
                 transform: "translateY(-50%)",
+                padding: "0 10px",
               }}
             >
               <h2
@@ -206,8 +195,9 @@ const Home = () => {
             <div
               className="carousel-caption d-flex flex-column justify-content-center align-items-center"
               style={{
-                top: "30%",
+                top: "50%",
                 transform: "translateY(-50%)",
+                padding: "0 10px",
               }}
             >
               <h2
@@ -240,8 +230,9 @@ const Home = () => {
             <div
               className="carousel-caption d-flex flex-column justify-content-center align-items-center"
               style={{
-                top: "30%",
+                top: "50%",
                 transform: "translateY(-50%)",
+                padding: "0 10px",
               }}
             >
               <h2
@@ -413,7 +404,7 @@ const Home = () => {
       <div class="container">
         <div class="row g-3">
           {filterHandleEvent?.map((list) => (
-            <div class="col-2" key={list._id}>
+            <div className="col-6 col-sm-4 col-md-3 col-lg-2" key={list._id}>
               <div className="product-card p-3">
                 <div className="img-box position-relative">
                   {/* Like Button */}
@@ -460,12 +451,13 @@ const Home = () => {
       <div className="container py-5">
         <Swiper
           spaceBetween={20}
-          slidesPerView={3} // show 3 logos
-          loop={true} // infinite loop
+          slidesPerView={2}
+          autoplay={{ delay: 2000 }}
+          loop={true}
           breakpoints={{
-            640: { slidesPerView: 2 }, // mobile
-            768: { slidesPerView: 3 }, // tablet
-            1024: { slidesPerView: 4 }, // desktop
+            640: { slidesPerView: 2 },
+            768: { slidesPerView: 3 },
+            1024: { slidesPerView: 5 },
           }}
         >
           {brands.map((url, index) => (
@@ -560,28 +552,28 @@ const Home = () => {
 
       <div class=" p-4 shadow-sm ">
         <div class="row g-3 text-center">
-          <div class="col-3">
+          <div className="col-6 col-md-3">
             <div class="p-3 bg-light rounded h-100 d-flex flex-column align-items-center justify-content-center">
               <i class="bi bi-truck fs-2 mb-2"></i>
               <h5 class="fw-bold">Free Shipping & Return</h5>
               <p class="text-muted mb-0">Free Shipping over $300</p>
             </div>
           </div>
-          <div class="col-3">
+          <div className="col-6 col-md-3">
             <div class="p-3 bg-light rounded h-100 d-flex flex-column align-items-center justify-content-center">
               <i class="bi bi-currency-dollar fs-2 mb-2"></i>
               <h5 class="fw-bold">Money Back Guarantee</h5>
               <p class="text-muted mb-0">100% Money Back</p>
             </div>
           </div>
-          <div class="col-3">
+          <div className="col-6 col-md-3">
             <div class="p-3 bg-light rounded h-100 d-flex flex-column align-items-center justify-content-center">
               <i class="bi bi-tag fs-2 mb-2"></i>
               <h5 class="fw-bold">Best Prices</h5>
               <p class="text-muted mb-0">Always the best prices</p>
             </div>
           </div>
-          <div class="col-3">
+          <div className="col-6 col-md-3">
             <div class="p-3 bg-light rounded h-100 d-flex flex-column align-items-center justify-content-center">
               <i class="bi bi-headset fs-2 mb-2"></i>
               <h5 class="fw-bold">24/7 Support</h5>

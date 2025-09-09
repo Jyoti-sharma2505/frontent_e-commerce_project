@@ -1,22 +1,27 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
-import { useState } from "react";
 
 const ProductCart = () => {
   const { cart, setCart } = useEcommerceContext(); // cart ko update karne ke liye setCart bhi chahiye
 
+  
   // Quantity update handler
   const updateQty = (id, type) => {
     const updatedCart = cart.map((item) => {
       if (item._id === id) {
-        let newQty = item.qty || 1;
+        let newQty = item.add?.qty || 1;
         if (type === "inc") newQty += 1;
         if (type === "dec" && newQty > 1) newQty -= 1;
-        return { ...item, qty: newQty };
+
+        return {
+          ...item,
+          add: { ...item.add, qty: newQty }, // add ke andar qty update
+        };
       }
       return item;
     });
+
     setCart(updatedCart);
   };
 
@@ -26,15 +31,17 @@ const ProductCart = () => {
     setCart(updatedCart);
   };
 
-  // ✅ Calculation with qty
+  //  Calculation with qty
+  // Total MRP
   const totalMRP = cart?.reduce(
-    (acc, item) => acc + item.price * (item.qty || 1),
+    (acc, item) => acc + item.price * (item.add?.qty || 1),
     0
   );
 
+  // Total Discount
   const totalDiscount = cart?.reduce(
     (acc, item) =>
-      acc + (item.price * (item.discount || 0) * (item.qty || 1)) / 100,
+      acc + (item.price * (item.discount || 0) * (item.add?.qty || 1)) / 100,
     0
   );
 
@@ -61,7 +68,11 @@ const ProductCart = () => {
                   src={item.image}
                   alt={item.name}
                   className="me-3 rounded"
-                  style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    objectFit: "cover",
+                  }}
                 />
 
                 {/* Product Details */}
@@ -69,24 +80,26 @@ const ProductCart = () => {
                   <h6 className="mb-1 fw-semibold">{item.name}</h6>
                   <p className="text-muted mb-1">
                     <span className="fw-bold text-danger">
-                      ₹{item.price * (item.qty || 1)}
+                      ₹{item.price * (item.add?.qty || 1)}
                     </span>{" "}
-                    <span
-                      className="text-muted"
-                      style={{
-                        textDecoration: "line-through",
-                        fontSize: "13px",
-                      }}
-                    >
-                      ₹{(item.price + 500) * (item.qty || 1)}
+                    <span className="text-muted text-decoration-line-through">
+                      ₹{(item.price + 500) * (item.add?.qty || 1)}
                     </span>
                   </p>
                   <small className="text-success fw-semibold">
                     {item.discount}% off | You Save ₹
                     {Math.round(
-                      (item.price * item.discount * (item.qty || 1)) / 100
+                      (item.price * item.discount * (item.add?.qty || 1)) / 100
                     )}
                   </small>
+
+                  {/* ✅ Size Display */}
+                  <p className="mt-2 mb-0">
+                    <span className="fw-semibold">Size: </span>
+                    <span className="badge bg-secondary">
+                      {item.add?.size || "M"}
+                    </span>
+                  </p>
 
                   {/* Quantity */}
                   <div className="mt-2 d-flex align-items-center">
@@ -98,8 +111,7 @@ const ProductCart = () => {
                     </button>
                     <input
                       type="number"
-                      value={item.qty || 1}
-                      readOnly
+                      value={item.add?.qty || 1} // safe access
                       style={{
                         width: "50px",
                         textAlign: "center",

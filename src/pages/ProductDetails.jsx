@@ -1,14 +1,37 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { Link, useParams } from "react-router-dom";
-import useFetch from "../useFetch";
 import "../index.css";
+import { useEcommerceContext } from "../contexts/EcommerceContext";
+import { useState } from "react";
 
 const ProductDetails = () => {
   const { productId } = useParams(); // URL se product id
-  const { data, loading, error } = useFetch(
-    "https://backend-e-commerce-project.vercel.app/products"
-  );
+  const { data, loading, error, handleSubmit, setCart, cart } =
+    useEcommerceContext();
+
+  // Local state for quantity and size
+  const [add, setAdd] = useState({
+    qty: "1",
+    size: "M",
+  });
+
+  // Change handler for inputs
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setAdd((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Add to cart function
+  const addToCart = () => {
+    handleSubmit(product._id, {
+      qty: Number(add.qty),
+      size: add.size,
+    });
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error fetching product</p>;
@@ -23,6 +46,7 @@ const ProductDetails = () => {
     (item) =>
       item.subCategory === product.subCategory && item._id !== product._id
   );
+
   return (
     <>
       <Header />
@@ -31,7 +55,7 @@ const ProductDetails = () => {
           <div className="row">
             {/* Left Side - Product Image */}
             <div className="col-md-6 ">
-              <div className=" position-relative">
+              <div className="position-relative">
                 <button className="like-btn">
                   <i className="bi bi-heart"></i>
                 </button>
@@ -58,7 +82,7 @@ const ProductDetails = () => {
                     marginRight: "10px",
                   }}
                 >
-                  Rs {product.price} {/* discounted price */}
+                  Rs {product.price}
                 </span>
                 <span
                   style={{
@@ -90,30 +114,35 @@ const ProductDetails = () => {
                 <span className="text-muted">({product.rating} / 5)</span>
               </div>
 
-              {/* Quantity */}
+              {/* Quantity Input */}
+              {/* Quantity Input */}
               <div className="mb-3">
                 <label className="me-2 fw-bold">Quantity:</label>
                 <input
                   type="number"
-                  defaultValue={1}
-                  min={1}
+                  value={add.qty}
+                  name="qty" 
+                  min="1"
                   style={{ width: "80px" }}
                   className="form-control d-inline"
+                  onChange={handleChange}
                 />
               </div>
 
               {/* Size Options */}
-              <div className="mb-3">
-                <label className="me-2 fw-bold">Size:</label>
-                {["S", "M", "L", "XL"].map((size) => (
-                  <button
-                    key={size}
-                    className="btn btn-outline-dark btn-sm me-2"
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
+              <label className="fw-bold">Size:</label>
+              <select
+                name="size"
+                value={add.size}
+                onChange={handleChange} 
+                className="form-select form-select-sm mt-2"
+                style={{ width: "100px" }}
+              >
+                <option value="S">Small</option>
+                <option value="M">Medium</option>
+                <option value="L">Large</option>
+                <option value="XL">XL</option>
+              </select>
 
               {/* Description */}
               <p className="mt-3">{product.description}</p>
@@ -135,12 +164,15 @@ const ProductDetails = () => {
               </div>
 
               {/* Add to Cart Button */}
-              <Link  to="/cart" className="btn btn-primary btn-lg w-100 mt-3">
-                Add to Cart
+              <Link
+                onClick={()=>addToCart(product._id)}
+                className="btn btn-primary btn-lg w-100 mt-3"
+              >
+                {product?.inCart ? "Remove from Cart" : "Add to Cart"}
               </Link>
             </div>
           </div>
-
+``
           {/* Similar Products Section */}
           <div className="mt-5">
             <h4 className="mb-4">Similar Products</h4>
@@ -148,7 +180,7 @@ const ProductDetails = () => {
               {similar?.map((item) => (
                 <div className="col-md-3" key={item._id}>
                   <div className="card h-100 shadow-sm border-0">
-                    {/* Sirf Image Upar */}
+                    {/* Image */}
                     <img
                       src={item.image}
                       alt={item.name}
@@ -156,9 +188,8 @@ const ProductDetails = () => {
                       style={{ height: "500px", objectFit: "cover" }}
                     />
 
-                    {/* Saari Details Image ke Neeche */}
+                    {/* Details */}
                     <div className="card-body text-center">
-                      {/* Name */}
                       <h6 className="card-title fw-bold">{item.name}</h6>
 
                       {/* Rating */}
@@ -173,7 +204,7 @@ const ProductDetails = () => {
                         </span>
                       </div>
 
-                      {/* Price + Cut Price */}
+                      {/* Price */}
                       <p className="mb-1">
                         <span className="fw-bold text-danger me-2">
                           Rs {item.price}

@@ -44,20 +44,25 @@ export function EcommerceContextProvider({ children }) {
   }, [categoryFilter]);
 
   // ✅ Add/Remove Cart
- const handleSubmit = (selectId) => {
-  setSelect((prevSelect) => {
-    // product list update
-    const updatedList = prevSelect.map((item) =>
-      item._id === selectId ? { ...item, inCart: !item.inCart } : item
+const handleSubmit = (selectId, addData) => {
+  setSelect((prevProducts) => {
+    const updatedList = prevProducts.map((item) =>
+      item._id === selectId
+        ? {
+            ...item,
+            inCart: !item.inCart,
+            add: addData,   // ✅ quantity & size yaha store hoga
+          }
+        : item
     );
 
-    // cart update
-    const updatedCart = updatedList.filter((item) => item.inCart);
-    setCart(updatedCart);
-
+    setCart(updatedList.filter((item) => item.inCart)); // cart update
     return updatedList;
   });
 };
+
+
+
   
   const handleWish = (productId) => {
   const updatedList = select.map((item) =>
@@ -113,13 +118,13 @@ export function EcommerceContextProvider({ children }) {
         setRating,
         sortBy,
         setSortBy,
-        cart, // ✅ ab cart state accessible hai
+        cart, //  ab cart state accessible hai
         loading,
         error,
         data,
         listWish,
         handleWish,
-        setCart,
+        setCart
       }}
     >
       {children}
