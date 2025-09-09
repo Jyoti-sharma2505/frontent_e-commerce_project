@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import CartStatus from "./CartStatus";
 import WishListStatus from "./WishListStatus";
+import { useEcommerceContext } from "../contexts/EcommerceContext";
 
 const Header = () => {
+  const {setSearchTerm,searchTerm}=useEcommerceContext()
   return (
     <>
       <nav
@@ -66,26 +68,18 @@ const Header = () => {
                   Product Cart
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link disabled"
-                  to="#"
-                  tabIndex="-1"
-                  aria-disabled="true"
-                >
-                  Shopping Cart
-                </Link>
-              </li>
             </ul>
 
             {/* Search bar */}
-            <form className="d-flex my-2 my-lg-0">
+            <form className="d-flex my-2 my-lg-0" onSubmit={(e)=>e.preventDefault()}>
               <div className="input-group">
                 <input
                   type="search"
                   className="form-control border-0 border-bottom bg-transparent rounded-0 shadow-none"
                   placeholder="Search"
                   aria-label="Search"
+                       value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <span className="input-group-text border-0 bg-transparent p-0">
                   <i className="bi bi-search"></i>

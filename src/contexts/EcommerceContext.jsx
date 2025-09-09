@@ -26,6 +26,7 @@ export function EcommerceContextProvider({ children }) {
   const [select, setSelect] = useState([]);
   const [cart, setCart] = useState([]);
   const [ listWish,setListWish] =useState([])
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (data?.getAll) {
@@ -85,7 +86,14 @@ const handleSubmit = (selectId, addData) => {
 
       if (rating && item.rating < rating) return false;
 
-      return true;
+        if (
+      searchTerm &&
+      !item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      !item.description.toLowerCase().includes(searchTerm.toLowerCase())
+    ) {
+      return false;
+    }
+    return true
     })
     ?.sort((a, b) => {
       if (sortBy === "lowToHigh") return a.price - b.price;
@@ -124,7 +132,8 @@ const handleSubmit = (selectId, addData) => {
         data,
         listWish,
         handleWish,
-        setCart
+        setCart,
+          searchTerm, setSearchTerm,
       }}
     >
       {children}

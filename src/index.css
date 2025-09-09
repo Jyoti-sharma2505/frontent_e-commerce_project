@@ -29,7 +29,7 @@
   /* Text Overlay */
   .card-body {
     position: absolute;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -38,17 +38,21 @@
     padding: 10px;
     border-radius: 10px;
   }
+  :root {
+  --bs-card-title-color: #174e7e;
+}
 
   .card-title {
     font-size: 24px;
     font-weight: bold;
+    color: var(--bs-card-title-color);
   }
 
   .card-text {
     font-size: 14px;
     font-size: 1rem;
   line-height: 1.6;
-  color: #6c757d;
+  color: #3e87c7;
   margin: 0;
   }
  .custom-card {

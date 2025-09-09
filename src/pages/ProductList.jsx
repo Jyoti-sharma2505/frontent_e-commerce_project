@@ -48,7 +48,7 @@ const ProductList = () => {
                 {["All", "Men", "Women"].map((cat) => (
                   <div key={cat}>
                     <input
-                      type="radio"
+                      type="checkbox"
                       name="category"
                       id={cat}
                       checked={category === cat}

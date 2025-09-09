@@ -121,7 +121,7 @@ const ProductDetails = () => {
                 <input
                   type="number"
                   value={add.qty}
-                  name="qty" 
+                  name="qty"
                   min="1"
                   style={{ width: "80px" }}
                   className="form-control d-inline"
@@ -134,7 +134,7 @@ const ProductDetails = () => {
               <select
                 name="size"
                 value={add.size}
-                onChange={handleChange} 
+                onChange={handleChange}
                 className="form-select form-select-sm mt-2"
                 style={{ width: "100px" }}
               >
@@ -165,14 +165,14 @@ const ProductDetails = () => {
 
               {/* Add to Cart Button */}
               <Link
-                onClick={()=>addToCart(product._id)}
+                onClick={() => addToCart(product._id)}
                 className="btn btn-primary btn-lg w-100 mt-3"
               >
                 {product?.inCart ? "Remove from Cart" : "Add to Cart"}
               </Link>
             </div>
           </div>
-``
+          ``
           {/* Similar Products Section */}
           <div className="mt-5">
             <h4 className="mb-4">Similar Products</h4>
@@ -185,7 +185,7 @@ const ProductDetails = () => {
                       src={item.image}
                       alt={item.name}
                       className="card-img-top"
-                      style={{ height: "500px", objectFit: "cover" }}
+                      style={{ height: "300px", objectFit: "cover" }}
                     />
 
                     {/* Details */}
@@ -224,11 +224,18 @@ const ProductDetails = () => {
                       <span className="badge bg-danger mb-2">20% OFF</span>
 
                       {/* Buttons */}
-                      <div className="d-flex justify-content-center gap-2 mt-2">
-                        <button className="btn btn-sm btn-outline-dark">
+                      {/* Buttons */}
+                      <div className="d-flex justify-content-center gap-3 mt-3">
+                        <button
+                          className="btn btn-outline-dark px-4 py-2 fw-semibold"
+                          style={{ cursor: "pointer", borderRadius: "8px" }}
+                        >
                           View
                         </button>
-                        <button className="btn btn-sm btn-primary">
+                        <button
+                          className="btn btn-primary px-4 py-2 fw-semibold"
+                          style={{ cursor: "pointer", borderRadius: "8px" }}
+                        >
                           Add to Cart
                         </button>
                       </div>
