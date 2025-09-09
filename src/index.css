@@ -29,13 +29,13 @@
   /* Text Overlay */
   .card-body {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     color: white;
     background: rgba(0, 0, 0, 0.4); /* halka sa transparent background */
-    padding: 15px;
+    padding: 10px;
     border-radius: 10px;
   }
 
@@ -110,6 +110,7 @@
 .img-box {
   position: relative;
   overflow: hidden;
+  margin-top: 10px;
 }
 
 .like-btn {

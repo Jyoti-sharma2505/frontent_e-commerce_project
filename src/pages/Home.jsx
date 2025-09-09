@@ -21,7 +21,7 @@ const brands = [
 
 const Home = () => {
   //   const [filter, setFilter] = useState("ALL");
-  const { filterHandleEvent, handleSubmit, handleWish, loading, error } =
+  const { filterHandleEvent, handleSubmit, handleWish,setCategory} =
     useEcommerceContext();
   return (
     <>
@@ -281,7 +281,7 @@ const Home = () => {
             <Link
               to="/products"
               state={{ categoryName: "Women" }}
-              onClick={() => setFilter("Women")}
+              onClick={() => setCategory("Women")}
             >
               <img
                 src="https://i.pinimg.com/736x/a2/86/63/a28663a49b5c976bc1c4500dec254315.jpg"
@@ -304,7 +304,7 @@ const Home = () => {
             <Link
               to="/products"
               state={{ categoryName: "Men" }}
-              onClick={() => setFilter("Men")}
+              onClick={() => setCategory("Men")}
             >
               <img
                 src="https://i.pinimg.com/736x/81/f6/90/81f690c81b28dec84730a4cc445f5ac4.jpg"
@@ -363,7 +363,7 @@ const Home = () => {
               <Link
                 state={{ categoryName: "All" }}
                 to="/products"
-                onClick={() => setFilter("All")}
+                onClick={() => setCategory("All")}
                 style={{ color: "#0d6efd", textDecoration: "none" }}
               >
                 All Product
@@ -377,7 +377,7 @@ const Home = () => {
               <Link
                 state={{ categoryName: "Men" }}
                 to="/products"
-                onClick={() => setFilter("All")}
+                onClick={() => setCategory("Men")}
                 style={{ color: "#0d6efd", textDecoration: "none" }}
               >
                 Men
@@ -391,7 +391,7 @@ const Home = () => {
               <Link
                 state={{ categoryName: "Women" }}
                 to="/products"
-                onClick={() => setFilter("All")}
+                onClick={() => setCategory("Women")}
                 style={{ color: "#0d6efd", textDecoration: "none" }}
               >
                 Women
