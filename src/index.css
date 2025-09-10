@@ -1,71 +1,69 @@
+/* ---------------------- CARD STYLING ---------------------- */
 .card {
-  height: 350px; /* card ki fixed height */
+  height: 350px;
   display: flex;
-  align-items: center; /* image ko vertical center me lana */
-  justify-content: center; /* horizontal center */
+  align-items: center;
+  justify-content: center;
   background: #f8f9fa;
-  overflow: hidden; /* extra content cut ho jaye */
+  overflow: hidden;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .card img {
-  height: 100%;   /* card ke height ke andar fit rahe */
-  width: 100%;    /* card ke width ke andar fit rahe */
-  object-fit: cover; 
-   display: block; 
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
   transition: transform 0.4s ease, filter 0.4s ease;
 }
-@media (max-width: 768px) {
-  .card img {
-    height: 200px;
-  }
+
+.card:hover img {
+  transform: scale(1.05);
+  filter: brightness(80%);
 }
 
-  /* Hover Effect */
-  .card:hover img {
-    transform: scale(1.05); /* thoda zoom */
-    filter: brightness(80%); /* thoda dark */
-  }
+.card-body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  background: rgba(167, 120, 120, 0.4);
+  padding: 10px;
+  border-radius: 10px;
+}
 
-  /* Text Overlay */
-  .card-body {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-    background: rgba(167, 120, 120, 0.4); /* halka sa transparent background */
-    padding: 10px;
-    border-radius: 10px;
-  }
-  :root {
+:root {
   --bs-card-title-color: #174e7e;
 }
 
-  .card-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--bs-card-title-color);
-  }
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--bs-card-title-color);
+}
 
-  .card-text {
-    font-size: 14px;
-    font-size: 1rem;
+.card-text {
+  font-size: 1rem;
   line-height: 1.6;
   color: white;
   margin: 0;
-  }
- .custom-card {
+}
+
+/* ---------------------- CUSTOM CARD ---------------------- */
+.custom-card {
   max-width: 100%;
-  height: 300px;                 /* total card height */
+  height: 300px;
   margin: 20px auto;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;         /* stack image and text vertically */
-  justify-content: flex-start;    /* start from top */
-  align-items: center;            /* center horizontally */
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   text-align: center;
   padding: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -73,10 +71,12 @@
 
 .img-box {
   width: 100%;
-  height: 70%;                   /* image takes 70% of card */
+  height: 70%;
   overflow: hidden;
   border-radius: 8px;
   background-color: #f0f0f0;
+  position: relative;
+  margin-top: 10px;
 }
 
 .img-box img {
@@ -98,113 +98,12 @@
   color: #6c757d;
 }
 
-.custom-card {
-  border: 1px solid #eee;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
-  overflow: hidden;
-  text-align: center;
-}
-
 .custom-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-.img-box {
-  position: relative;
-  overflow: hidden;
-  margin-top: 10px;
-}
-
-.like-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  border: none;
-  background: rgba(163, 42, 42, 0.9);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  z-index: 2;
-}
-
-.like-btn:hover {
-  background: #ff4d6d;
-  color: white;
-}
-
-.overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.img-box:hover .overlay {
-  opacity: 1;
-}
-
-.cart-btn {
-  background: #ff4d6d;
-  color: #fff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s ease;
-}
-
-.cart-btn:hover {
-  background: #d93b57;
-}
-
-.filter-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-}
-
-.product-card {
-  border: 1px solid #eee;
-  border-radius: 12px;
-  transition: transform 0.3s ease;
-  overflow: hidden;
-  text-align: center;
-  background: #fff;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-}
-
-.img-box {
-  position: relative;
-  overflow: hidden;
-}
-
-.img-box img {
-  height: 250px;
-  width: 100%;
-  object-fit: contain;
-  background: #f8f9fa;
-  padding: 10px;
-}
-
+/* ---------------------- BUTTONS ---------------------- */
 .like-btn {
   position: absolute;
   top: 8px;
@@ -227,21 +126,6 @@
   color: white;
 }
 
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.img-box:hover .overlay {
-  opacity: 1;
-}
-
 .cart-btn {
   background: #ff4d6d;
   color: #fff;
@@ -257,4 +141,168 @@
   background: #d93b57;
 }
 
+/* ---------------------- IMAGE OVERLAY ---------------------- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 
+.img-box:hover .overlay {
+  opacity: 1;
+}
+
+/* ---------------------- PRODUCTS & FILTER CARDS ---------------------- */
+.filter-card, .product-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------------------- CAROUSEL ---------------------- */
+#carouselExampleCaptions {
+  margin-bottom: 0; /* Remove extra space */
+}
+
+#carouselExampleCaptions .carousel-inner {
+  height: 100vh; /* Full height slider */
+}
+
+#carouselExampleCaptions .carousel-inner img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Carousel caption center */
+#carouselExampleCaptions .carousel-caption {
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 15px;
+}
+
+/* Carousel arrows center vertically */
+#carouselExampleCaptions .carousel-control-prev,
+#carouselExampleCaptions .carousel-control-next {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+}
+
+#carouselExampleCaptions .carousel-control-prev-icon,
+#carouselExampleCaptions .carousel-control-next-icon {
+  background-size: 50% 50%;
+}
+
+/* Remove gap between slider and next div */
+.carousel + .row,
+.carousel + .container,
+.carousel + div {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* ---------------------- MOBILE ---------------------- */
+@media (max-width: 768px) {
+  #carouselExampleCaptions .carousel-inner {
+    height: 50vh; /* Mobile slider height */
+  }
+
+  #carouselExampleCaptions .carousel-control-prev,
+  #carouselExampleCaptions .carousel-control-next {
+    width: 40px;
+    height: 40px;
+  }
+
+  #carouselExampleCaptions .carousel-control-prev-icon,
+  #carouselExampleCaptions .carousel-control-next-icon {
+    background-size: 70% 70%;
+  }
+
+  #carouselExampleCaptions .carousel-caption h2 {
+    font-size: 1.6rem;
+  }
+
+  #carouselExampleCaptions .carousel-caption p {
+    font-size: 0.95rem;
+  }
+
+  /* Cards spacing reduce */
+/* ---------------------- CARDS IMAGE FULL ---------------------- */
+.row.row-cols-1.row-cols-md-2.g-4 .card img {
+  width: 100%;
+  height: 100%; /* container ko full cover kare */
+  object-fit: cover; /* stretch nahi, crop karke fill */
+  display: block;
+}
+
+
+@media (max-width: 768px) {
+  .row.row-cols-1.row-cols-md-2.g-4 .card img {
+    height: 180px; /* mobile par thoda chhota */
+  }
+
+  .row.row-cols-1.row-cols-md-2.g-4 .card {
+    margin-bottom: 5px; /* gap kam karo */
+  }
+}
+
+.carousel + .row,
+.carousel + .container {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+
+  /* Brands slider image */
+  .swiper-slide img {
+    height: 70px !important;
+  }
+}
+
+/* Extra small devices (<576px) */
+@media (max-width: 576px) {
+  #carouselExampleCaptions .carousel-inner {
+    height: 40vh !important;
+  }
+
+  #carouselExampleCaptions .carousel-caption h2 {
+    font-size: 1.3rem !important;
+  }
+
+  #carouselExampleCaptions .carousel-caption p {
+    font-size: 0.85rem !important;
+  }
+
+  .card img, .custom-card img, .img-box img {
+    height: 180px !important;
+  }
+
+  .swiper-slide img {
+    height: 60px !important;
+  }
+}
+
+/* ---------------------- NEW ARRIVALS & HISTORY ---------------------- */
+.custom-card .card-text {
+  font-size: 1rem;
+  color: #bdbb5bff;
+  text-align: center;
+  margin-bottom: 20px;
+}

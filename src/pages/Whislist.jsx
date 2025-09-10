@@ -4,7 +4,8 @@ import Header from "../components/Header";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
 
 const Whislsit = () => {
-  const { listWish, handleSubmit, handleWish,removeFromWishlist } = useEcommerceContext();
+  const { listWish, handleSubmit, handleWish, removeFromWishlist } =
+    useEcommerceContext();
 
   return (
     <>
@@ -45,6 +46,9 @@ const Whislsit = () => {
                       {/* Product Details */}
                       <h5 className="fw-semibold mb-2">{product.name}</h5>
                       <p className="text-muted mb-3">₹{product.price}</p>
+                      <p className="text-muted mb-3">
+                        ₹{product.price} | Qty: {product.add?.qty || 1}
+                      </p>
 
                       {/* Add to Cart Button */}
                       <button
@@ -61,7 +65,7 @@ const Whislsit = () => {
                           handleSubmit(product._id, addData);
 
                           // 2️⃣ Remove from Wishlist
-                           removeFromWishlist(product._id);
+                          removeFromWishlist(product._id);
                         }}
                       >
                         Add to Cart

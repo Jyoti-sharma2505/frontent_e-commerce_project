@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 // import { useContext, useEffect, useState } from "react";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
+import "../index.css";
 
 const ProductList = () => {
   const {

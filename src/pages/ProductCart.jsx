@@ -4,7 +4,7 @@ import { useEcommerceContext } from "../contexts/EcommerceContext";
 import { Link } from "react-router-dom";
 
 const ProductCart = () => {
-  const { cart, setCart } = useEcommerceContext(); // cart ko update karne ke liye setCart bhi chahiye
+  const { cart, setCart, listWish, handleWish } = useEcommerceContext();
 
   // Quantity update handler
   const updateQty = (id, size, type) => {
@@ -26,7 +26,6 @@ const ProductCart = () => {
   };
 
   // Remove item from cart
-  // Remove item from cart
   const removeFromCart = (id, size) => {
     const updatedCart = cart.filter(
       (item) => !(item._id === id && item.add?.size === size)
@@ -34,14 +33,29 @@ const ProductCart = () => {
     setCart(updatedCart);
   };
 
-  //  Calculation with qty
-  // Total MRP
+  // ✅ Move to Wishlist
+// ✅ Move to Wishlist
+const moveToWishlist = (id, size) => {
+  const itemToMove = cart.find(
+    (item) => item._id === id && item.add?.size === size
+  );
+
+  if (itemToMove) {
+    // Wishlist me add karo with qty + size
+    handleWish(itemToMove._id, { qty: itemToMove.add?.qty, size });
+
+    // Cart se remove karo
+    removeFromCart(id, size);
+  }
+};
+
+
+  // Calculation with qty
   const totalMRP = cart?.reduce(
     (acc, item) => acc + item.price * (item.add?.qty || 1),
     0
   );
 
-  // Total Discount
   const totalDiscount = cart?.reduce(
     (acc, item) =>
       acc + (item.price * (item.discount || 0) * (item.add?.qty || 1)) / 100,
@@ -63,7 +77,7 @@ const ProductCart = () => {
             </h4>
             {cart?.map((item) => (
               <div
-                key={item._id}
+                key={item._id + item.add?.size}
                 className="d-flex align-items-center border rounded mb-3 p-3 shadow-sm bg-white"
               >
                 {/* Product Image */}
@@ -132,6 +146,14 @@ const ProductCart = () => {
                       +
                     </button>
                   </div>
+
+                  {/* ✅ Move to Wishlist Button */}
+                  <button
+                    className="btn btn-sm btn-outline-primary mt-2"
+                    onClick={() => moveToWishlist(item._id, item.add?.size)}
+                  >
+                    <i className="bi bi-heart me-1"></i> Move to Wishlist
+                  </button>
                 </div>
 
                 {/* Remove Button */}

@@ -99,26 +99,59 @@ export function EcommerceContextProvider({ children }) {
     });
   };
 
-  const handleWish = (productId) => {
-    const updatedList = select.map((item) =>
-      item._id === productId ? { ...item, inWish: !item.inWish } : item
+  // ✅ Wishlist Add / Update Qty
+// ✅ Wishlist Add / Update Qty
+const handleWish = (productId, addData = { qty: 1, size: "M" }) => {
+  setSelect((prevProducts) => {
+    let updatedList = prevProducts.map((item) => {
+      if (item._id === productId && item.add?.size === addData?.size) {
+        // Agar already wishlist me hai same size ke sath → qty badhao
+        return {
+          ...item,
+          inWish: true,
+          add: {
+            ...item.add,
+            qty: (item.add?.qty || 0) + (addData?.qty || 1),
+            size: addData?.size || "M",
+          },
+        };
+      }
+      return item;
+    });
+
+    // Agar wishlist me same size wala product pehle se nahi hai → naya add karo
+    const exists = updatedList.some(
+      (item) => item._id === productId && item.inWish && item.add?.size === addData?.size
     );
-    setSelect(updatedList);
+
+    if (!exists) {
+      const product = prevProducts.find((item) => item._id === productId);
+      updatedList.push({
+        ...product,
+        inWish: true,
+        add: { ...addData, qty: addData?.qty || 1, size: addData?.size || "M" },
+      });
+    }
 
     const wishlistItems = updatedList.filter((item) => item.inWish);
     setListWish(wishlistItems);
-  };
+    return updatedList;
+  });
+};
 
-  // ✅ Direct remove from wishlist
-  const removeFromWishlist = (productId) => {
-    const updatedList = select.map((item) =>
+
+// ✅ Direct remove from wishlist
+const removeFromWishlist = (productId) => {
+  setSelect((prevProducts) => {
+    const updatedList = prevProducts.map((item) =>
       item._id === productId ? { ...item, inWish: false } : item
     );
-    setSelect(updatedList);
-
     const wishlistItems = updatedList.filter((item) => item.inWish);
     setListWish(wishlistItems);
-  };
+    return updatedList;
+  });
+};
+
 
   // ✅ Filter + Sort
   const filterHandleEvent = select
