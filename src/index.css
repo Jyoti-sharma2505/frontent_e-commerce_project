@@ -243,38 +243,68 @@
     font-size: 0.95rem;
   }
 
+
   /* Cards spacing reduce */
-/* ---------------------- CARDS IMAGE FULL ---------------------- */
+  /* ---------------------- CARDS ---------------------- */
+.row.row-cols-1.row-cols-md-2.g-4 .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: #f8f9fa;
+  overflow: hidden;
+  margin-bottom: 10px;
+  height: auto; /* image ke height ke hisab se adjust */
+  border-radius: 10px;
+}
+
 .row.row-cols-1.row-cols-md-2.g-4 .card img {
   width: 100%;
-  height: 100%; /* container ko full cover kare */
-  object-fit: cover; /* stretch nahi, crop karke fill */
+  height: 100%; /* container ko pura cover kare */
+  object-fit: cover; /* image stretch nahi, crop karke fit */
   display: block;
 }
 
+/* Card body overlay */
+.row.row-cols-1.row-cols-md-2.g-4 .card-body {
+  position: absolute;
+  bottom: 10px; /* bottom par thoda text */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 5px 10px;
+  border-radius: 6px;
+}
 
+.row.row-cols-1.row-cols-md-2.g-4 .card-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 0;
+}
+
+.row.row-cols-1.row-cols-md-2.g-4 .card-text {
+  font-size: 0.8rem;
+  color: #fff;
+  margin: 0;
+}
+
+/* ---------------------- MOBILE FIXES ---------------------- */
 @media (max-width: 768px) {
-  .row.row-cols-1.row-cols-md-2.g-4 .card img {
-    height: 180px; /* mobile par thoda chhota */
+  /* .row.row-cols-1.row-cols-md-2.g-4 .card img {
+    height: 250px; /* mobile par image ka height fix */
+  } */
+
+  .row.row-cols-1.row-cols-md-2.g-4 .card-title {
+    font-size: 0.9rem; /* mobile par title chhota */
   }
 
-  .row.row-cols-1.row-cols-md-2.g-4 .card {
-    margin-bottom: 5px; /* gap kam karo */
+  .row.row-cols-1.row-cols-md-2.g-4 .card-text {
+    font-size: 0.6rem; /* mobile par text aur chhota */
   }
 }
 
-.carousel + .row,
-.carousel + .container {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
-
-
-  /* Brands slider image */
-  .swiper-slide img {
-    height: 70px !important;
-  }
-}
 
 /* Extra small devices (<576px) */
 @media (max-width: 576px) {
@@ -290,9 +320,9 @@
     font-size: 0.85rem !important;
   }
 
-  .card img, .custom-card img, .img-box img {
+  /* .card img, .custom-card img, .img-box img {
     height: 180px !important;
-  }
+  } */
 
   .swiper-slide img {
     height: 60px !important;
