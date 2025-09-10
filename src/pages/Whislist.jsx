@@ -1,9 +1,10 @@
+import { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
 
 const Whislsit = () => {
-  const { listWish, handleSubmit,handleWish } = useEcommerceContext();
+  const { listWish, handleSubmit, handleWish,removeFromWishlist } = useEcommerceContext();
 
   return (
     <>
@@ -50,9 +51,20 @@ const Whislsit = () => {
                         className={`btn btn-sm ${
                           product.inWish ? "btn-outline-danger" : "btn-primary"
                         } w-100`}
-                        onClick={() => handleSubmit(product._id)}
+                        onClick={() => {
+                          const addData = {
+                            qty: 1,
+                            size: product.add?.size || "M",
+                          };
+
+                          // 1️⃣ Add to Cart
+                          handleSubmit(product._id, addData);
+
+                          // 2️⃣ Remove from Wishlist
+                           removeFromWishlist(product._id);
+                        }}
                       >
-                        {product.inWish ? "Remove from Cart" : "Add to Cart"}
+                        Add to Cart
                       </button>
                     </div>
                   </div>

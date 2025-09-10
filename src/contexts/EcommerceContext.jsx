@@ -6,14 +6,11 @@ const EcommerceContext = createContext();
 
 export const useEcommerceContext = () => useContext(EcommerceContext);
 
-
-
-
 export function EcommerceContextProvider({ children }) {
-    const { data, loading, error } = useFetch(
+  const { data, loading, error } = useFetch(
     "https://backend-e-commerce-project.vercel.app/products"
   );
-  
+
   const location = useLocation();
   const categoryFilter = location.state?.categoryName || "All";
 
@@ -21,11 +18,12 @@ export function EcommerceContextProvider({ children }) {
   const [price, setPrice] = useState(5000);
   const [rating, setRating] = useState(null);
   const [sortBy, setSortBy] = useState("relevance");
+  const [categories, setCategories] = useState([]);
 
   // ✅ products with inCart field
   const [select, setSelect] = useState([]);
   const [cart, setCart] = useState([]);
-  const [ listWish,setListWish] =useState([])
+  const [listWish, setListWish] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -38,47 +36,77 @@ export function EcommerceContextProvider({ children }) {
     }
   }, [data]);
 
-    useEffect(() => {
+  useEffect(() => {
     if (categoryFilter) {
       setCategory(categoryFilter);
     }
   }, [categoryFilter]);
 
   // ✅ Add/Remove Cart
-const handleSubmit = (selectId, addData) => {
-  setSelect((prevProducts) => {
-    const updatedList = prevProducts.map((item) =>
-      item._id === selectId
-        ? {
+  const handleSubmit = (selectId, addData) => {
+    setSelect((prevProducts) => {
+      const updatedList = prevProducts.map((item) => {
+        if (item._id === selectId && item.add?.size === addData?.size) {
+          // Same product & same size → quantity update
+          return {
             ...item,
-            inCart: !item.inCart,
-            add: addData,   // ✅ quantity & size yaha store hoga
-          }
-        : item
-    );
+            inCart: true,
+            add: {
+              ...item.add,
+              qty: (item.add?.qty) + (addData?.qty),
+            },
+          };
+        }
+        return item;
+      });
 
-    setCart(updatedList.filter((item) => item.inCart)); // cart update
-    return updatedList;
-  });
-};
+      // Agar same product but alag size hai → push as new
+      const exists = updatedList.some(
+        (item) => item._id === selectId && item.add?.size === addData?.size
+      );
 
+      if (!exists) {
+        const product = prevProducts.find((item) => item._id === selectId);
+        updatedList.push({
+           ...product,
+          _id: selectId,
+          inCart: true,
+          add: addData, // { qty, size }
+        });
+      }
 
+      setCart(updatedList.filter((item) => item.inCart));
+      return updatedList;
+    });
+  };
 
-  
   const handleWish = (productId) => {
-  const updatedList = select.map((item) =>
-    item._id === productId ? { ...item, inWish: !item.inWish } : item
-  );
-  setSelect(updatedList);
-  const wishlistItems = updatedList.filter((item) => item.inWish);
-  setListWish(wishlistItems);
-};
+    const updatedList = select.map((item) =>
+      item._id === productId ? { ...item, inWish: !item.inWish } : item
+    );
+    setSelect(updatedList);
+
+    const wishlistItems = updatedList.filter((item) => item.inWish);
+    setListWish(wishlistItems);
+  };
+
+  // ✅ Direct remove from wishlist
+  const removeFromWishlist = (productId) => {
+    const updatedList = select.map((item) =>
+      item._id === productId ? { ...item, inWish: false } : item
+    );
+    setSelect(updatedList);
+
+    const wishlistItems = updatedList.filter((item) => item.inWish);
+    setListWish(wishlistItems);
+  };
 
   // ✅ Filter + Sort
   const filterHandleEvent = select
     ?.filter((item) => {
-      if (categoryFilter !== "All" && item.subCategory !== categoryFilter)
+      if (categories.length > 0 && !categories.includes(item.subCategory)) {
         return false;
+      }
 
       if (category !== "All" && item.subCategory !== category) return false;
 
@@ -86,14 +114,14 @@ const handleSubmit = (selectId, addData) => {
 
       if (rating && item.rating < rating) return false;
 
-        if (
-      searchTerm &&
-      !item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      !item.description.toLowerCase().includes(searchTerm.toLowerCase())
-    ) {
-      return false;
-    }
-    return true
+      if (
+        searchTerm &&
+        !item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        !item.description.toLowerCase().includes(searchTerm.toLowerCase())
+      ) {
+        return false;
+      }
+      return true;
     })
     ?.sort((a, b) => {
       if (sortBy === "lowToHigh") return a.price - b.price;
@@ -106,7 +134,7 @@ const handleSubmit = (selectId, addData) => {
 
   // ✅ Clear Filters
   const clearFilters = () => {
-    setCategory("All");
+    setCategories([]);
     setPrice(5000);
     setRating(null);
     setSortBy("relevance");
@@ -133,7 +161,11 @@ const handleSubmit = (selectId, addData) => {
         listWish,
         handleWish,
         setCart,
-          searchTerm, setSearchTerm,
+        searchTerm,
+        setSearchTerm,
+        removeFromWishlist,
+        setCategories,
+        categories
       }}
     >
       {children}

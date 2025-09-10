@@ -19,8 +19,20 @@ const ProductList = () => {
     setRating,
     sortBy,
     handleWish,
+    categories,
+    setCategories,
     setSortBy,
   } = useEcommerceContext();
+  // const [categories, setCategories] = useState([]);
+ const toggleCategory = (cat) => {
+  if (categories.includes(cat)) {
+    setCategories(categories.filter((c) => c !== cat)); // remove if already selected
+  } else {
+    setCategories([...categories, cat]); // add if not selected
+  }
+};
+
+
 
   return (
     <>
@@ -51,8 +63,8 @@ const ProductList = () => {
                       type="checkbox"
                       name="category"
                       id={cat}
-                      checked={category === cat}
-                      onChange={() => setCategory(cat)}
+                      checked={categories?.includes(cat)}
+                      onChange={() => toggleCategory(cat)}
                       style={{ marginRight: "6px" }}
                     />
                     <label htmlFor={cat}>{cat}</label>

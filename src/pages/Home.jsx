@@ -401,53 +401,6 @@ const Home = () => {
         </nav>
       </div>
 
-      <div class="container">
-        <div class="row g-3">
-          {filterHandleEvent?.map((list) => (
-            <div className="col-6 col-sm-4 col-md-3 col-lg-2" key={list._id}>
-              <div className="product-card p-3">
-                <div className="img-box position-relative">
-                  {/* Like Button */}
-                  <button
-                    className="like-btn"
-                    onClick={() => handleWish(list._id)}
-                  >
-                    <i
-                      className={`bi ${
-                        list.inWish ? "bi-heart-fill" : "bi-heart"
-                      }`}
-                      style={{
-                        color: list.inWish ? "red" : "#ccc",
-                        cursor: "pointer",
-                        fontSize: "1.5rem",
-                      }}
-                    ></i>
-                  </button>
-                  <img
-                    src={list.image}
-                    class="img-fluid rounded"
-                    alt={list?.name}
-                  />
-
-                  {/* Add to Cart Overlay */}
-                  <div>
-                    <button
-                      onClick={() => handleSubmit(list?._id)}
-                      className="cart-btn"
-                    >
-                      {list?.inCart ? "Remove to Cart" : "Add to Cart"}
-                    </button>
-                  </div>
-                </div>
-
-                <h6 className="mt-2 mb-0">{list?.name}</h6>
-                <p>Rs {list?.price}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       <div className="container py-5">
         <Swiper
           spaceBetween={20}

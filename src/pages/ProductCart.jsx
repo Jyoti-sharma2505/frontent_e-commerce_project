@@ -1,22 +1,22 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
+import { Link } from "react-router-dom";
 
 const ProductCart = () => {
   const { cart, setCart } = useEcommerceContext(); // cart ko update karne ke liye setCart bhi chahiye
 
-  
   // Quantity update handler
-  const updateQty = (id, type) => {
+  const updateQty = (id, size, type) => {
     const updatedCart = cart.map((item) => {
-      if (item._id === id) {
+      if (item._id === id && item.add?.size === size) {
         let newQty = item.add?.qty || 1;
         if (type === "inc") newQty += 1;
         if (type === "dec" && newQty > 1) newQty -= 1;
 
         return {
           ...item,
-          add: { ...item.add, qty: newQty }, // add ke andar qty update
+          add: { ...item.add, qty: newQty },
         };
       }
       return item;
@@ -26,8 +26,11 @@ const ProductCart = () => {
   };
 
   // Remove item from cart
-  const removeFromCart = (id) => {
-    const updatedCart = cart.filter((item) => item._id !== id);
+  // Remove item from cart
+  const removeFromCart = (id, size) => {
+    const updatedCart = cart.filter(
+      (item) => !(item._id === id && item.add?.size === size)
+    );
     setCart(updatedCart);
   };
 
@@ -64,16 +67,18 @@ const ProductCart = () => {
                 className="d-flex align-items-center border rounded mb-3 p-3 shadow-sm bg-white"
               >
                 {/* Product Image */}
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="me-3 rounded"
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                    objectFit: "cover",
-                  }}
-                />
+                <Link to={`/products/${item?._id}`}>
+                  <img
+                    src={item?.image}
+                    alt={item.name}
+                    className="me-3 rounded"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Link>
 
                 {/* Product Details */}
                 <div className="flex-grow-1">
@@ -105,13 +110,14 @@ const ProductCart = () => {
                   <div className="mt-2 d-flex align-items-center">
                     <button
                       className="btn btn-sm btn-outline-dark me-2"
-                      onClick={() => updateQty(item._id, "dec")}
+                      onClick={() => updateQty(item._id, item.add?.size, "dec")}
                     >
                       -
                     </button>
                     <input
                       type="number"
-                      value={item.add?.qty || 1} // safe access
+                      value={item.add?.qty || 1}
+                      readOnly
                       style={{
                         width: "50px",
                         textAlign: "center",
@@ -121,7 +127,7 @@ const ProductCart = () => {
                     />
                     <button
                       className="btn btn-sm btn-outline-dark ms-2"
-                      onClick={() => updateQty(item._id, "inc")}
+                      onClick={() => updateQty(item._id, item.add?.size, "inc")}
                     >
                       +
                     </button>
@@ -131,7 +137,7 @@ const ProductCart = () => {
                 {/* Remove Button */}
                 <button
                   className="btn btn-sm btn-outline-danger ms-3"
-                  onClick={() => removeFromCart(item._id)}
+                  onClick={() => removeFromCart(item._id, item.add?.size)}
                 >
                   <i className="bi bi-trash"></i>
                 </button>

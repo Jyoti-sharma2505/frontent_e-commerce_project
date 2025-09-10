@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const ProductDetails = () => {
   const { productId } = useParams(); // URL se product id
-  const { data, loading, error, handleSubmit, setCart, cart } =
+  const { data, loading, error, handleSubmit, updateQty } =
     useEcommerceContext();
 
   // Local state for quantity and size
@@ -165,10 +165,10 @@ const ProductDetails = () => {
 
               {/* Add to Cart Button */}
               <Link
-                onClick={() => addToCart(product._id)}
+                onClick={ addToCart}
                 className="btn btn-primary btn-lg w-100 mt-3"
               >
-                {product?.inCart ? "Remove from Cart" : "Add to Cart"}
+                Add to Cart
               </Link>
             </div>
           </div>
@@ -178,19 +178,30 @@ const ProductDetails = () => {
             <h4 className="mb-4">Similar Products</h4>
             <div className="row g-4">
               {similar?.map((item) => (
-                <div className="col-md-3" key={item._id}>
+                <div
+                  className="col-12 col-sm-6 col-md-4 col-lg-3"
+                  key={item._id}
+                >
                   <div className="card h-100 shadow-sm border-0">
                     {/* Image */}
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="card-img-top"
-                      style={{ height: "300px", objectFit: "cover" }}
-                    />
+                    <div className="text-center">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="card-img-top img-fluid"
+                        style={{
+                          height: "250px",
+                          objectFit: "contain", // ensures full image shows
+                        }}
+                      />
+                    </div>
 
                     {/* Details */}
-                    <div className="card-body text-center">
-                      <h6 className="card-title fw-bold">{item.name}</h6>
+                    <div className=" text-center">
+                      {/* Name */}
+                      <h6 className="fw-bold text-truncate">
+                        {item.name}
+                      </h6>
 
                       {/* Rating */}
                       <div className="mb-2">
@@ -224,16 +235,15 @@ const ProductDetails = () => {
                       <span className="badge bg-danger mb-2">20% OFF</span>
 
                       {/* Buttons */}
-                      {/* Buttons */}
-                      <div className="d-flex justify-content-center gap-3 mt-3">
+                      <div className="d-flex flex-wrap justify-content-center gap-2 mt-3">
                         <button
-                          className="btn btn-outline-dark px-4 py-2 fw-semibold"
+                          className="btn btn-outline-dark px-3 py-2 fw-semibold w-100"
                           style={{ cursor: "pointer", borderRadius: "8px" }}
                         >
                           View
                         </button>
                         <button
-                          className="btn btn-primary px-4 py-2 fw-semibold"
+                          className="btn btn-primary px-3 py-2 fw-semibold w-100"
                           style={{ cursor: "pointer", borderRadius: "8px" }}
                         >
                           Add to Cart

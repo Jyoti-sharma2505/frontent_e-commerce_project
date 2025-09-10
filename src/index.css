@@ -34,7 +34,7 @@
     transform: translate(-50%, -50%);
     text-align: center;
     color: white;
-    background: rgba(0, 0, 0, 0.4); /* halka sa transparent background */
+    background: rgba(167, 120, 120, 0.4); /* halka sa transparent background */
     padding: 10px;
     border-radius: 10px;
   }
@@ -52,7 +52,7 @@
     font-size: 14px;
     font-size: 1rem;
   line-height: 1.6;
-  color: #3e87c7;
+  color: white;
   margin: 0;
   }
  .custom-card {

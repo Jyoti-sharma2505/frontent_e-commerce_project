@@ -5,7 +5,7 @@ import WishListStatus from "./WishListStatus";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
 
 const Header = () => {
-  const {setSearchTerm,searchTerm}=useEcommerceContext()
+  const { setSearchTerm, searchTerm } = useEcommerceContext();
   return (
     <>
       <nav
@@ -65,21 +65,24 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/products">
-                  Product Cart
+                  Products
                 </Link>
               </li>
             </ul>
 
             {/* Search bar */}
-            <form className="d-flex my-2 my-lg-0" onSubmit={(e)=>e.preventDefault()}>
+            <form
+              className="d-flex my-2 my-lg-0"
+              onSubmit={(e) => e.preventDefault()}
+            >
               <div className="input-group">
                 <input
                   type="search"
                   className="form-control border-0 border-bottom bg-transparent rounded-0 shadow-none"
                   placeholder="Search"
                   aria-label="Search"
-                       value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <span className="input-group-text border-0 bg-transparent p-0">
                   <i className="bi bi-search"></i>
@@ -90,11 +93,14 @@ const Header = () => {
             {/* Right icons */}
             <div className="ms-lg-3 d-flex align-items-center gap-3 mt-3 mt-lg-0">
               <i className="bi bi-person-circle fs-4"></i>
-              <Link to="/wishlist" className="position-relative"><i className="bi bi-heart fs-4"></i>
-               <span
+              <Link to="/wishlist" className="position-relative">
+                <i className="bi bi-heart fs-4"></i>
+                <span
                   className="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                   style={{ fontSize: "0.7rem" }}
-                ><WishListStatus/></span>
+                >
+                  <WishListStatus />
+                </span>
               </Link>
 
               <Link to="/cart" className="position-relative">
