@@ -14,11 +14,11 @@ export function EcommerceContextProvider({ children }) {
   const location = useLocation();
   const categoryFilter = location.state?.categoryName || "All";
 
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState(["All"]);
   const [price, setPrice] = useState(5000);
   const [rating, setRating] = useState(null);
   const [sortBy, setSortBy] = useState("relevance");
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
 
   // ✅ products with inCart field
   const [select, setSelect] = useState([]);
@@ -36,11 +36,30 @@ export function EcommerceContextProvider({ children }) {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (categoryFilter) {
-      setCategory(categoryFilter);
+ const toggleCategory = (cat) => {
+  if (cat === "All") {
+    // Agar "All" select kiya to sirf "All" rakho
+    setCategory(["All"]);
+  } else {
+    let updated = [];
+
+    if (category.includes(cat)) {
+      // agar already selected hai to remove karo
+      updated = category.filter((c) => c !== cat);
+    } else {
+      // agar nahi hai to add karo
+      updated = [...category.filter((c) => c !== "All"), cat];
     }
-  }, [categoryFilter]);
+
+    // agar sab empty ho gaye to default "All"
+    if (updated.length === 0) {
+      updated = ["All"];
+    }
+
+    setCategory(updated);
+  }
+};
+
 
   // ✅ Add/Remove Cart
   const handleSubmit = (selectId, addData) => {
@@ -103,38 +122,38 @@ export function EcommerceContextProvider({ children }) {
 
   // ✅ Filter + Sort
   const filterHandleEvent = select
-    ?.filter((item) => {
-      if (categories.length > 0 && !categories.includes(item.subCategory)) {
-        return false;
-      }
+  .filter((product) => {
+    // ✅ Category filter for multiple selections
+    if (category.length > 0 && !category.includes("All")) {
+      return category.includes(product.subCategory || product.category);
+    }
+    return true; // agar "All" ya empty hai, sab products dikhao
+  })
+  .filter((product) => {
+    // ✅ Price filter
+    return product.price <= price;
+  })
+  .filter((product) => {
+    // ✅ Rating filter
+    if (rating > 0) {
+      return product.rating >= rating;
+    }
+    return true;
+  })
+  .sort((a, b) => {
+    // ✅ Sort filter
+    if (sortBy === "lowToHigh") return a.price - b.price;
+    if (sortBy === "highToLow") return b.price - a.price;
+    if (sortBy === "rating") return b.rating - a.rating;
+    if (sortBy === "newest") return new Date(b.createdAt) - new Date(a.createdAt);
+    return 0;
+  });
 
-      if (category !== "All" && item.subCategory !== category) return false;
 
-      if (item.price > price) return false;
-
-      if (rating && item.rating < rating) return false;
-
-      if (
-        searchTerm &&
-        !item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        !item.description.toLowerCase().includes(searchTerm.toLowerCase())
-      ) {
-        return false;
-      }
-      return true;
-    })
-    ?.sort((a, b) => {
-      if (sortBy === "lowToHigh") return a.price - b.price;
-      if (sortBy === "highToLow") return b.price - a.price;
-      if (sortBy === "rating") return b.rating - a.rating;
-      if (sortBy === "newest")
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      return 0;
-    });
 
   // ✅ Clear Filters
   const clearFilters = () => {
-    setCategories([]);
+    setCategory([]);
     setPrice(5000);
     setRating(null);
     setSortBy("relevance");
@@ -164,8 +183,8 @@ export function EcommerceContextProvider({ children }) {
         searchTerm,
         setSearchTerm,
         removeFromWishlist,
-        setCategories,
-        categories
+        // setCategories,
+        // categories
       }}
     >
       {children}

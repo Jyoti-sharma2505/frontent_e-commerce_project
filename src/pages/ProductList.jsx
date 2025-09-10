@@ -19,19 +19,34 @@ const ProductList = () => {
     setRating,
     sortBy,
     handleWish,
-    categories,
-    setCategories,
+    // categories,
+    // setCategories,
     setSortBy,
   } = useEcommerceContext();
   // const [categories, setCategories] = useState([]);
- const toggleCategory = (cat) => {
-  if (categories.includes(cat)) {
-    setCategories(categories.filter((c) => c !== cat)); // remove if already selected
+const toggleCategory = (cat) => {
+  if (cat === "All") {
+    // Agar "All" select kiya to sirf "All" rakho
+    setCategory(["All"]);
   } else {
-    setCategories([...categories, cat]); // add if not selected
+    let updated = [];
+
+    if (category.includes(cat)) {
+      // agar already selected hai to remove karo
+      updated = category.filter((c) => c !== cat);
+    } else {
+      // agar nahi hai to add karo
+      updated = [...category.filter((c) => c !== "All"), cat];
+    }
+
+    // agar sab empty ho gaye to default "All"
+    if (updated.length === 0) {
+      updated = ["All"];
+    }
+
+    setCategory(updated);
   }
 };
-
 
 
   return (
@@ -63,7 +78,7 @@ const ProductList = () => {
                       type="checkbox"
                       name="category"
                       id={cat}
-                      checked={categories?.includes(cat)}
+                      checked={category?.includes(cat)}
                       onChange={() => toggleCategory(cat)}
                       style={{ marginRight: "6px" }}
                     />

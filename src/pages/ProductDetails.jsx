@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import "../index.css";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
 import { useState } from "react";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 const ProductDetails = () => {
   const { productId } = useParams(); // URL se product id
@@ -46,6 +47,14 @@ const ProductDetails = () => {
     (item) =>
       item.subCategory === product.subCategory && item._id !== product._id
   );
+
+  const showToast = () => {
+    const toastElement = document.getElementById("cartToast");
+    if (toastElement) {
+      const toast = new window.bootstrap.Toast(toastElement);
+      toast.show();
+    }
+  };
 
   return (
     <>
@@ -163,13 +172,50 @@ const ProductDetails = () => {
                 </p>
               </div>
 
-              {/* Add to Cart Button */}
-              <Link
-                onClick={ addToCart}
-                className="btn btn-primary btn-lg w-100 mt-3"
+              <div
+                className="toast align-items-center text-bg-success border-0"
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
+                id="cartToast"
+              >
+                {/* Toast Container - fixed at top right */}
+                <div
+                  className="toast-container position-fixed top-0 end-0 p-3"
+                  style={{ zIndex: 9999 }}
+                >
+                  <div
+                    className="toast align-items-center text-bg-success border-0"
+                    role="alert"
+                    aria-live="assertive"
+                    aria-atomic="true"
+                    id="cartToast"
+                  >
+                    <div className="d-flex">
+                      <div className="toast-body">
+                        ✅ Item added to cart successfully!
+                      </div>
+                      <button
+                        type="button"
+                        className="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* {{{Add to Cart Button}}} */}
+              <button
+                className="btn btn-primary w-100 mt-3"
+                onClick={() => {
+                  addToCart();
+                  showToast(); // ✅ Toast trigger
+                }}
               >
                 Add to Cart
-              </Link>
+              </button>
             </div>
           </div>
           ``
@@ -199,9 +245,7 @@ const ProductDetails = () => {
                     {/* Details */}
                     <div className=" text-center">
                       {/* Name */}
-                      <h6 className="fw-bold text-truncate">
-                        {item.name}
-                      </h6>
+                      <h6 className="fw-bold text-truncate">{item.name}</h6>
 
                       {/* Rating */}
                       <div className="mb-2">
