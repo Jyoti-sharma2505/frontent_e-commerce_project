@@ -68,20 +68,24 @@ const handleSubmit = (productId, addData = { qty: 1, size: "M" }) => {
   setSelect((prevProducts) =>
     prevProducts.map((item) =>
       item._id === productId
-        ? { ...item, inCart: !item.inCart } // 👈 yaha toggle karo
+        ? { ...item, inCart: true } // hamesha true, remove logic alag se handle
         : item
     )
   );
 
   setCart((prevCart) => {
-    const exists = prevCart.find((item) => item._id === productId);
+    const existingIndex = prevCart.findIndex(
+      (item) => item._id === productId && item.add.size === addData.size
+    );
 
-    if (exists) {
-      // already in cart → remove
-      return prevCart.filter((item) => item._id !== productId);
+    if (existingIndex !== -1) {
+      // agar same product + same size already cart me hai → qty increment
+      const updatedCart = [...prevCart];
+      updatedCart[existingIndex].add.qty = addData.qty || 1;
+      return updatedCart;
     }
 
-    // new entry in cart
+    // agar size different ya naya product → new entry in cart
     const product = select.find((p) => p._id === productId);
     if (!product) return prevCart;
 
@@ -91,6 +95,7 @@ const handleSubmit = (productId, addData = { qty: 1, size: "M" }) => {
     ];
   });
 };
+
 
 
 // ✅ Add to Wishlist
