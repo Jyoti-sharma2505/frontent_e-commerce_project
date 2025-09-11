@@ -62,95 +62,130 @@ export function EcommerceContextProvider({ children }) {
 
 
   // ✅ Add/Remove Cart
-  const handleSubmit = (selectId, addData) => {
-    setSelect((prevProducts) => {
-      const updatedList = prevProducts.map((item) => {
-        if (item._id === selectId && item.add?.size === addData?.size) {
-          // Same product & same size → quantity update
-          return {
-            ...item,
-            inCart: true,
-            add: {
-              ...item.add,
-              qty: (item.add?.qty) + (addData?.qty),
-            },
-          };
-        }
-        return item;
-      });
+  // ✅ Add to Cart
+// ✅ Add/Remove Cart
+const handleSubmit = (productId, addData = { qty: 1, size: "M" }) => {
+  setSelect((prevProducts) =>
+    prevProducts.map((item) =>
+      item._id === productId
+        ? { ...item, inCart: !item.inCart } // 👈 yaha toggle karo
+        : item
+    )
+  );
 
-      // Agar same product but alag size hai → push as new
-      const exists = updatedList.some(
-        (item) => item._id === selectId && item.add?.size === addData?.size
-      );
+  setCart((prevCart) => {
+    const exists = prevCart.find((item) => item._id === productId);
 
-      if (!exists) {
-        const product = prevProducts.find((item) => item._id === selectId);
-        updatedList.push({
-           ...product,
-          _id: selectId,
-          inCart: true,
-          add: addData, // { qty, size }
-        });
-      }
-
-      setCart(updatedList.filter((item) => item.inCart));
-      return updatedList;
-    });
-  };
-
-  // ✅ Wishlist Add / Update Qty
-// ✅ Wishlist Add / Update Qty
-const handleWish = (productId, addData = { qty: 1, size: "M" }) => {
-  setSelect((prevProducts) => {
-    let updatedList = prevProducts.map((item) => {
-      if (item._id === productId && item.add?.size === addData?.size) {
-        // Agar already wishlist me hai same size ke sath → qty badhao
-        return {
-          ...item,
-          inWish: true,
-          add: {
-            ...item.add,
-            qty: (item.add?.qty || 0) + (addData?.qty || 1),
-            size: addData?.size || "M",
-          },
-        };
-      }
-      return item;
-    });
-
-    // Agar wishlist me same size wala product pehle se nahi hai → naya add karo
-    const exists = updatedList.some(
-      (item) => item._id === productId && item.inWish && item.add?.size === addData?.size
-    );
-
-    if (!exists) {
-      const product = prevProducts.find((item) => item._id === productId);
-      updatedList.push({
-        ...product,
-        inWish: true,
-        add: { ...addData, qty: addData?.qty || 1, size: addData?.size || "M" },
-      });
+    if (exists) {
+      // already in cart → remove
+      return prevCart.filter((item) => item._id !== productId);
     }
 
-    const wishlistItems = updatedList.filter((item) => item.inWish);
-    setListWish(wishlistItems);
-    return updatedList;
+    // new entry in cart
+    const product = select.find((p) => p._id === productId);
+    if (!product) return prevCart;
+
+    return [
+      ...prevCart,
+      { ...product, inCart: true, add: { ...addData, qty: addData?.qty || 1 } },
+    ];
   });
 };
 
 
-// ✅ Direct remove from wishlist
+// ✅ Add to Wishlist
+// ✅ Toggle Wishlist
+const handleWish = (productId, addData = { qty: 1, size: "M" }) => {
+  setSelect((prevProducts) =>
+    prevProducts.map((item) =>
+      item._id === productId
+        ? {
+            ...item,
+            inWish: !item.inWish, // 👈 toggle true/false
+           inCart: false, 
+            add: {
+              ...item.add,
+              qty: item.add?.qty || addData.qty,
+              size: item.add?.size || addData.size,
+            },
+          }
+        : item
+    )
+  );
+
+  // Update listWish
+  setListWish((prevWish) => {
+    const exists = prevWish.find((item) => item._id === productId);
+    if (exists) {
+      // already hai -> remove
+      return prevWish.filter((item) => item._id !== productId);
+    } else {
+      // naya add karo
+      const product = select.find((p) => p._id === productId);
+      if (!product) return prevWish;
+      return [...prevWish, { ...product, inWish: true,inCart: product.inCart, add: addData }];
+    }
+
+    // new wishlist item
+    const product = select.find((p) => p._id === productId);
+    if (!product) return prevWish;
+
+    return [
+      ...prevWish,
+      { ...product, inWish: true, add: { ...addData, qty: addData?.qty || 1 } },
+    ];
+  });
+};
+
+// ✅ Remove from Wishlist
+// ✅ Remove from Wishlist by productId
 const removeFromWishlist = (productId) => {
-  setSelect((prevProducts) => {
-    const updatedList = prevProducts.map((item) =>
-      item._id === productId ? { ...item, inWish: false } : item
-    );
-    const wishlistItems = updatedList.filter((item) => item.inWish);
-    setListWish(wishlistItems);
-    return updatedList;
-  });
+  // 1. Wishlist se hatao
+  setListWish((prevWish) =>
+    prevWish.filter((item) => item._id !== productId)
+  );
+
+  // 2. Select (all products list) update karo taki wishlist flag false ho jaye
+  setSelect((prevProducts) =>
+    prevProducts.map((item) =>
+      item._id === productId
+        ? { ...item, inWish: false }
+        : item
+    )
+  );
 };
+
+// ✅ Move to Wishlist (from Cart)
+const moveToWishlist = (productId) => {
+  // 1. Cart se hatao
+  setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
+
+  // 2. Wishlist me daalo
+  setListWish((prevWish) => {
+    const product = select.find((p) => p._id === productId);
+    if (!product) return prevWish;
+
+    // agar already wishlist me hai to dobara add na karo
+    const exists = prevWish.find((p) => p._id === productId);
+    if (exists) return prevWish;
+
+    return [
+      ...prevWish,
+      { ...product, inWish: true, }
+    ];
+  });
+
+  // 3. Flags update
+  setSelect((prevProducts) =>
+    prevProducts.map((item) =>
+      item._id === productId
+        ? { ...item, inWish: true,  }
+        : item
+    )
+  );
+};
+
+
 
 
   // ✅ Filter + Sort
@@ -216,6 +251,7 @@ const removeFromWishlist = (productId) => {
         searchTerm,
         setSearchTerm,
         removeFromWishlist,
+        moveToWishlist
         // setCategories,
         // categories
       }}

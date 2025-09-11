@@ -12,9 +12,9 @@ const Whislsit = () => {
       <Header />
       <main>
         <div className="container my-4">
-          <h3 className="mb-4">My Wishlist ({listWish.length} items)</h3>
+          <h3 className="mb-4">My Wishlist ({listWish?.length} items)</h3>
           <div className="row">
-            {listWish.length > 0 ? (
+            {listWish?.length > 0 ? (
               listWish.map((product) => {
                 // const isWishlisted = product.inWish; // or use another field if wishlist separate
                 return (
@@ -39,7 +39,9 @@ const Whislsit = () => {
                             color: product.inWish ? "red" : "#ccc",
                             cursor: "pointer",
                           }}
-                          onClick={() => handleWish(product._id)}
+                          onClick={() => {handleWish(product._id)
+                            
+                          }}
                         ></i>
                       </div>
 
@@ -65,7 +67,7 @@ const Whislsit = () => {
                           handleSubmit(product._id, addData);
 
                           // 2️⃣ Remove from Wishlist
-                          removeFromWishlist(product._id);
+                          removeFromWishlist(product?._id);
                         }}
                       >
                         Add to Cart

@@ -31,7 +31,7 @@
   text-align: center;
   color: white;
   background: rgba(167, 120, 120, 0.4);
-  padding: 10px;
+  /* padding: 10px; */
   border-radius: 10px;
 }
 
@@ -134,6 +134,10 @@
   border-radius: 20px;
   cursor: pointer;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+      margin-left: 87px;
   transition: background 0.3s ease;
 }
 
@@ -163,7 +167,7 @@
   border: 1px solid #eee;
   border-radius: 12px;
   overflow: hidden;
-  text-align: center;
+  /* text-align: center; */
   transition: transform 0.3s ease;
 }
 
@@ -246,48 +250,62 @@
 
   /* Cards spacing reduce */
   /* ---------------------- CARDS ---------------------- */
+/* ---------------------- CARD FULL IMAGE ---------------------- */
 .row.row-cols-1.row-cols-md-2.g-4 .card {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  background: #f8f9fa;
+  position: relative;
+  width: 100%;
+  height: 350px; /* desktop height */
   overflow: hidden;
-  margin-bottom: 10px;
-  height: auto; /* image ke height ke hisab se adjust */
   border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 .row.row-cols-1.row-cols-md-2.g-4 .card img {
   width: 100%;
-  height: 100%; /* container ko pura cover kare */
-  object-fit: cover; /* image stretch nahi, crop karke fit */
+  height: 100%; /* card area ko pura cover kare */
+  object-fit: cover; /* image ko stretch na kare, crop karke fit kare */
   display: block;
 }
 
-/* Card body overlay */
+/* Card text overlay */
 .row.row-cols-1.row-cols-md-2.g-4 .card-body {
   position: absolute;
-  bottom: 10px; /* bottom par thoda text */
-  left: 50%;
-  transform: translateX(-50%);
+  top: 50%; /* vertically center */
+  left: 50%; /* horizontally center */
+  transform: translate(-50%, -50%);
   text-align: center;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.35); /* thoda transparent background */
   padding: 5px 10px;
   border-radius: 6px;
+  width: 90%;
 }
 
 .row.row-cols-1.row-cols-md-2.g-4 .card-title {
-  font-size: 1rem;
+  font-size: 1rem; /* chota text */
   font-weight: bold;
   color: #fff;
   margin: 0;
 }
 
 .row.row-cols-1.row-cols-md-2.g-4 .card-text {
-  font-size: 0.8rem;
+  font-size: 0.75rem; /* chota text */
   color: #fff;
   margin: 0;
+}
+
+/* ---------------------- MOBILE FIXES ---------------------- */
+@media (max-width: 768px) {
+  .row.row-cols-1.row-cols-md-2.g-4 .card {
+    height: 220px; /* mobile me thoda chota */
+  }
+
+  .row.row-cols-1.row-cols-md-2.g-4 .card-title {
+    font-size: 0.9rem;
+  }
+
+  .row.row-cols-1.row-cols-md-2.g-4 .card-text {
+    font-size: 0.7rem;
+  }
 }
 
 /* ---------------------- MOBILE FIXES ---------------------- */

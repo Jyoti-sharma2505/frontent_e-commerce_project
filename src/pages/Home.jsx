@@ -124,7 +124,7 @@ const Home = () => {
             <div
               className="carousel-caption d-flex flex-column justify-content-center align-items-center"
               style={{
-                top: "50%",
+                top: "30%",
                 transform: "translateY(-50%)",
                 padding: "0 10px",
               }}
@@ -159,7 +159,7 @@ const Home = () => {
             <div
               className="carousel-caption d-flex flex-column justify-content-center align-items-center"
               style={{
-                top: "50%",
+                top: "30%",
                 transform: "translateY(-50%)",
                 padding: "0 10px",
               }}
@@ -195,7 +195,7 @@ const Home = () => {
             <div
               className="carousel-caption d-flex flex-column justify-content-center align-items-center"
               style={{
-                top: "50%",
+                top: "30%",
                 transform: "translateY(-50%)",
                 padding: "0 10px",
               }}
@@ -216,13 +216,13 @@ const Home = () => {
                   textShadow: "1px 1px 6px rgba(0,0,0,0.6)",
                 }}
               >
-                Formal shirts, trousers, women’s office wear.
+                Formal shirts, trousers, women office wear.
               </p>
             </div>
           </div>
           <div class="carousel-item">
             <img
-              src="https://i.pinimg.com/736x/a6/31/75/a63175c97f79fcf5621b87be96283243.jpg"
+              src="https://i.pinimg.com/736x/41/ea/a3/41eaa39d758313e98c2616e484f45c89.jpg"
               class="d-block w-100 img-fluid"
               alt="..."
               style={{ objectFit: "cover", objectPosition: "center" }}
@@ -230,7 +230,7 @@ const Home = () => {
             <div
               className="carousel-caption d-flex flex-column justify-content-center align-items-center"
               style={{
-                top: "50%",
+                top: "30%",
                 transform: "translateY(-50%)",
                 padding: "0 10px",
               }}
@@ -287,10 +287,11 @@ const Home = () => {
                 src="https://i.pinimg.com/736x/a2/86/63/a28663a49b5c976bc1c4500dec254315.jpg"
                 class="card-img-top"
                 alt="..."
+                style={{height:"764px"}}
               />
             </Link>
             <div class="card-body">
-              <h5 class="card-title">Women</h5>
+              <h5 class="card-title" >Women</h5>
               <p class="card-text">
                 This is a longer card with supporting text below as a natural
                 lead-in to additional content. This content is a little bit

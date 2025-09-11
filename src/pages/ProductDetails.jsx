@@ -1,6 +1,6 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "../index.css";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
 import { useState } from "react";
@@ -156,13 +156,16 @@ const ProductDetails = () => {
               {/* Icons */}
               <div className="mb-3">
                 <p className="mb-1">
-                  <i className="bi bi-truck me-2 text-success"></i> Free Shipping
+                  <i className="bi bi-truck me-2 text-success"></i> Free
+                  Shipping
                 </p>
                 <p className="mb-1">
-                  <i className="bi bi-headset me-2 text-primary"></i> 24/7 Support
+                  <i className="bi bi-headset me-2 text-primary"></i> 24/7
+                  Support
                 </p>
                 <p className="mb-1">
-                  <i className="bi bi-house-door me-2 text-warning"></i> Easy Returns
+                  <i className="bi bi-house-door me-2 text-warning"></i> Easy
+                  Returns
                 </p>
               </div>
 
@@ -207,63 +210,72 @@ const ProductDetails = () => {
 
           {/* Similar Products */}
           <div className="mt-5">
-  <h4 className="mb-4">Similar Products</h4>
-  <div className="row g-4">
-    {similar?.map((item) => (
-      <div
-        className="col-12 col-sm-6 col-md-4 col-lg-3"
-        key={item._id}
-      >
-        <div className="card h-100 shadow-sm border-0 similar-card">
-          <div className="text-center p-3">
-            <img
-              src={item.image}
-              alt={item.name}
-              className="card-img-top img-fluid"
-            />
-          </div>
-          <div className="text-center px-3 pb-3">
-            <h6 className="fw-bold text-truncate">{item.name}</h6>
-            <div className="mb-2">
-              {"⭐".repeat(item.rating || 4)}
-              <span
-                className="text-muted"
-                style={{ fontSize: "12px" }}
-              >
-                {" "}
-                ({item.rating || 4}/5)
-              </span>
+            <h4 className="mb-4">Similar Products</h4>
+            <div className="row g-4">
+              {similar?.map((item) => (
+                <div
+                  className="col-12 col-sm-6 col-md-4 col-lg-3"
+                  key={item._id}
+                >
+                  <div className="card h-100 shadow-sm border-0 similar-card">
+                    <div className="text-center p-3">
+                      <Link to={`/products/${item?._id}`}>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="card-img-top img-fluid"
+                        style={{
+                          height: "200px", // ✅ sab same height
+                          objectFit: "contain", // ✅ image cut nahi hogi
+                        }}
+                        />
+                     </Link>
+                    </div>
+                    <div className="text-center px-3 pb-3">
+                      <h6 className="fw-bold text-truncate">{item.name}</h6>
+                      <div className="mb-2">
+                        {"⭐".repeat(item.rating || 4)}
+                        <span
+                          className="text-muted"
+                          style={{ fontSize: "12px" }}
+                        >
+                          {" "}
+                          ({item.rating || 4}/5)
+                        </span>
+                      </div>
+                      <p className="mb-1">
+                        <span className="fw-bold text-danger me-2">
+                          Rs {item.price}
+                        </span>
+                        <span
+                          className="text-muted"
+                          style={{
+                            textDecoration: "line-through",
+                            fontSize: "13px",
+                          }}
+                        >
+                          Rs {item.price + 1000}
+                        </span>
+                      </p>
+                      <span className="badge bg-danger mb-2">20% OFF</span>
+                      <div className="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                        <button className="btn btn-outline-dark w-100">
+                          View
+                        </button>
+                        <button
+                          className="btn btn-primary w-100"
+                          onClick={() => {
+                            handleSubmit(item._id, { qty: 1, size: "M" });
+                            showToast();
+                          }}
+                        >{item.inCart?"Remove to cart":"Add to cart"}</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <p className="mb-1">
-              <span className="fw-bold text-danger me-2">
-                Rs {item.price}
-              </span>
-              <span
-                className="text-muted"
-                style={{
-                  textDecoration: "line-through",
-                  fontSize: "13px",
-                }}
-              >
-                Rs {item.price + 1000}
-              </span>
-            </p>
-            <span className="badge bg-danger mb-2">20% OFF</span>
-            <div className="d-flex flex-wrap justify-content-center gap-2 mt-3">
-              <button className="btn btn-outline-dark w-100">
-                View
-              </button>
-              <button className="btn btn-primary w-100">
-                Add to Cart
-              </button>
-            </div>
           </div>
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
-
         </div>
       </main>
       <Footer />

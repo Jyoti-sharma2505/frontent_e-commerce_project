@@ -25,30 +25,29 @@ const ProductList = () => {
     setSortBy,
   } = useEcommerceContext();
   // const [categories, setCategories] = useState([]);
-const toggleCategory = (cat) => {
-  if (cat === "All") {
-    // Agar "All" select kiya to sirf "All" rakho
-    setCategory(["All"]);
-  } else {
-    let updated = [];
-
-    if (category.includes(cat)) {
-      // agar already selected hai to remove karo
-      updated = category.filter((c) => c !== cat);
+  const toggleCategory = (cat) => {
+    if (cat === "All") {
+      // Agar "All" select kiya to sirf "All" rakho
+      setCategory(["All"]);
     } else {
-      // agar nahi hai to add karo
-      updated = [...category.filter((c) => c !== "All"), cat];
+      let updated = [];
+
+      if (category.includes(cat)) {
+        // agar already selected hai to remove karo
+        updated = category.filter((c) => c !== cat);
+      } else {
+        // agar nahi hai to add karo
+        updated = [...category.filter((c) => c !== "All"), cat];
+      }
+
+      // agar sab empty ho gaye to default "All"
+      if (updated.length === 0) {
+        updated = ["All"];
+      }
+
+      setCategory(updated);
     }
-
-    // agar sab empty ho gaye to default "All"
-    if (updated.length === 0) {
-      updated = ["All"];
-    }
-
-    setCategory(updated);
-  }
-};
-
+  };
 
   return (
     <>
@@ -180,10 +179,10 @@ const toggleCategory = (cat) => {
                       >
                         <i
                           className={`bi ${
-                            list.inWish ? "bi-heart-fill" : "bi-heart"
+                            list?.inWish ? "bi-heart-fill" : "bi-heart"
                           }`}
                           style={{
-                            color: list.inWish ? "red" : "#ccc",
+                            color: list?.inWish ? "red" : "#ccc",
                             cursor: "pointer",
                             fontSize: "1.5rem",
                           }}
@@ -200,7 +199,9 @@ const toggleCategory = (cat) => {
                       <div>
                         <button
                           onClick={() => handleSubmit(list?._id)}
-                          className="cart-btn"
+                          className={`btn w-100 ${
+                            list?.inCart ? "btn-danger" :"btn btn-outline-primary"
+                          }`}
                         >
                           {list?.inCart ? "Remove from Cart" : "Add to Cart"}
                         </button>
