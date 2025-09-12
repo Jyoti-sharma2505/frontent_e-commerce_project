@@ -80,7 +80,7 @@ const ProductList = () => {
                       id={cat}
                       checked={category?.includes(cat)}
                       onChange={() => toggleCategory(cat)}
-                      style={{ marginRight: "6px" }}
+                      style={{ marginRight: "6px", cursor:"pointer"}}
                     />
                     <label htmlFor={cat}>{cat}</label>
                   </div>
