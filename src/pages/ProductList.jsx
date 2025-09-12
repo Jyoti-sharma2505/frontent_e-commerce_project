@@ -201,6 +201,25 @@ const ProductList = () => {
                     <div className=" text-center">
                       <h5 >{list?.name}</h5>
                       <p className="text-muted mb-1">Rs {list?.price}</p>
+                      
+                      <div>
+    <div className="d-flex justify-content-center">
+      {Array.from({ length: 5 }, (_, i) => {
+        const starValue = i + 1;
+        return (
+          <span
+            key={i}
+            className={`bi ${
+              list?.rating >= starValue
+                ? "bi-star-fill"
+                : "bi-star"
+            }`}
+            style={{ fontSize: "1rem", color: "#ffc107", cursor: "pointer" }}
+          ></span>
+        );
+      })}
+    </div>
+    </div>
 
                       <button
                         onClick={() => handleSubmit(list?._id)}
