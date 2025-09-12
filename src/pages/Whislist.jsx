@@ -2,10 +2,22 @@ import { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
+import * as bootstrap from "bootstrap";
 
 const Whislsit = () => {
   const { listWish, handleSubmit, handleWish, removeFromWishlist } =
     useEcommerceContext();
+    const [add, setAdd] = useState({
+    qty: "1",
+    size: "M",
+  });
+
+     const addToCart = () => {
+    handleSubmit(product._id, {
+      qty: Number(add.qty),
+      size: add.size,
+    });
+  };
 
   return (
     <>
@@ -60,14 +72,20 @@ const Whislsit = () => {
                         onClick={() => {
                           const addData = {
                             qty: 1,
-                            size: product.add?.size || "M",
+                            // size: product.add?.size || "M",
                           };
+                           const modal = new bootstrap.Modal(
+                                                        document.getElementById("sizeModal")
+                                                      );
+                                                      document.getElementById("selectedProductId").value =
+                                                        product._id; // store product id
+                                                      modal.show();
 
                           // 1️⃣ Add to Cart
-                          handleSubmit(product._id, addData);
+                          // addToCart(addData);
 
-                          // 2️⃣ Remove from Wishlist
-                          removeFromWishlist(product?._id);
+                          // // 2️⃣ Remove from Wishlist
+                          // removeFromWishlist(product?._id);
                         }}
                       >
                         Add to Cart
@@ -79,6 +97,56 @@ const Whislsit = () => {
             ) : (
               <p>No products in wishlist.</p>
             )}
+          </div>
+        </div>
+         {/* Size Selection Modal */}
+        <div
+          className="modal fade"
+          id="sizeModal"
+          tabIndex="-1"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Select Size</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body text-center">
+                <input type="hidden" id="selectedProductId" />
+                <select id="selectedSize" className="form-select w-50 mx-auto">
+                  <option value="S">Small</option>
+                  <option value="M" selected>
+                    Medium
+                  </option>
+                  <option value="L">Large</option>
+                  <option value="XL">XL</option>
+                </select>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                  onClick={() => {
+                    const pid =
+                      document.getElementById("selectedProductId").value;
+                    const size = document.getElementById("selectedSize").value;
+                    handleSubmit(pid, { qty: 1, size });
+                    removeFromWishlist(pid);
+                    showToast();
+                    
+                  }}
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </main>

@@ -80,7 +80,7 @@ const ProductList = () => {
                       id={cat}
                       checked={category?.includes(cat)}
                       onChange={() => toggleCategory(cat)}
-                      style={{ marginRight: "6px", cursor:"pointer"}}
+                      style={{ marginRight: "6px", cursor: "pointer" }}
                     />
                     <label htmlFor={cat}>{cat}</label>
                   </div>
@@ -171,10 +171,10 @@ const ProductList = () => {
             <div className="row g-4">
               {filterHandleEvent?.map((list) => (
                 <div className="col-md-4" key={list?._id}>
-                  <div className="product-card p-3">
-                    <div className="img-box position-relative">
+                  <div className="product-card p-3 d-flex flex-column justify-content-between h-100">
+                    <div className="img-box position-relative text-center">
                       <button
-                        className="like-btn"
+                        className="like-btn position-absolute top-0 end-0 p-2"
                         onClick={() => handleWish(list._id)}
                       >
                         <i
@@ -183,11 +183,11 @@ const ProductList = () => {
                           }`}
                           style={{
                             color: list?.inWish ? "red" : "#ccc",
-                            cursor: "pointer",
                             fontSize: "1.5rem",
                           }}
                         ></i>
                       </button>
+
                       <Link to={`/products/${list?._id}`}>
                         <img
                           src={list?.image}
@@ -196,34 +196,21 @@ const ProductList = () => {
                           style={{ height: "250px", objectFit: "contain" }}
                         />
                       </Link>
-                      <div>
-                        <button
-                          onClick={() => handleSubmit(list?._id)}
-                          className={`btn w-100 ${
-                            list?.inCart ? "btn-danger" :"btn btn-outline-primary"
-                          }`}
-                        >
-                          {list?.inCart ? "Remove from Cart" : "Add to Cart"}
-                        </button>
-                      </div>
                     </div>
 
-                    <h5 className="mt-3">{list?.name}</h5>
-                    <p className="text-muted mb-1">Rs {list?.price}</p>
-                    <div style={{ color: "#ffc107", fontSize: "16px" }}>
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <i
-                          key={i}
-                          className={
-                            i < Math.round(list?.rating || 0)
-                              ? "bi bi-star-fill"
-                              : "bi bi-star"
-                          }
-                        ></i>
-                      ))}
-                      <span style={{ marginLeft: "6px", color: "#555" }}>
-                        ({list?.rating || 0})
-                      </span>
+                    <div className=" text-center">
+                      <h5 >{list?.name}</h5>
+                      <p className="text-muted mb-1">Rs {list?.price}</p>
+
+                      <button
+                        onClick={() => handleSubmit(list?._id)}
+                        className={`btn ${
+                          list?.inCart ? "btn-danger" : "btn-outline-primary"
+                        }`}
+                        style={{ marginTop: "8px", width: "100%" }}
+                      >
+                        {list?.inCart ? "Remove from Cart" : "Add to Cart"}
+                      </button>
                     </div>
                   </div>
                 </div>

@@ -9,7 +9,8 @@ import * as bootstrap from "bootstrap"; // ✅ Import full Bootstrap
 
 const ProductDetails = () => {
   const { productId } = useParams();
-  const { data, loading, error, handleSubmit } = useEcommerceContext();
+  const { data, loading, error, handleSubmit, handleWish } =
+    useEcommerceContext();
 
   // Local state
   const [add, setAdd] = useState({
@@ -64,8 +65,20 @@ const ProductDetails = () => {
             {/* Left Image */}
             <div className="col-md-6 ">
               <div className="position-relative">
-                <button className="like-btn">
-                  <i className="bi bi-heart"></i>
+                <button
+                  className="like-btn"
+                  onClick={() => handleWish(product._id)}
+                >
+                  <i
+                    className={`bi ${
+                      product?.inWish ? "bi-heart-fill" : "bi-heart"
+                    }`}
+                    style={{
+                      color: product?.inWish ? "red" : "#ccc",
+                      cursor: "pointer",
+                      fontSize: "1.5rem",
+                    }}
+                  ></i>
                 </button>
                 <img
                   src={product.image}
@@ -219,17 +232,15 @@ const ProductDetails = () => {
                 >
                   <div className="card h-100 shadow-sm border-0 similar-card">
                     <div className="text-center p-3">
-                      <Link to={`/products/${item?._id}`}>
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="card-img-top img-fluid"
-                        style={{
-                          height: "200px", // ✅ sab same height
-                          objectFit: "contain", // ✅ image cut nahi hogi
-                        }}
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="card-img-top img-fluid"
+                          style={{
+                            height: "200px", // ✅ sab same height
+                            objectFit: "contain", // ✅ image cut nahi hogi
+                          }}
                         />
-                     </Link>
                     </div>
                     <div className="text-center px-3 pb-3">
                       <h6 className="fw-bold text-truncate">{item.name}</h6>
@@ -259,21 +270,79 @@ const ProductDetails = () => {
                       </p>
                       <span className="badge bg-danger mb-2">20% OFF</span>
                       <div className="d-flex flex-wrap justify-content-center gap-2 mt-3">
-                        <button className="btn btn-outline-dark w-100">
+                        <Link
+                          to={`/products/${item._id}`}
+                          className="btn btn-outline-dark w-100"
+                        >
                           View
-                        </button>
+                        </Link>
                         <button
                           className="btn btn-primary w-100"
                           onClick={() => {
-                            handleSubmit(item._id, { qty: 1, size: "M" });
-                            showToast();
+                            // Open modal to select size
+                            const modal = new bootstrap.Modal(
+                              document.getElementById("sizeModal")
+                            );
+                            document.getElementById("selectedProductId").value =
+                              item._id; // store product id
+                            modal.show();
                           }}
-                        >{item.inCart?"Remove to cart":"Add to cart"}</button>
+                        >
+                          {item.inCart ? "Remove from Cart" : "Add to Cart"}
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+        {/* Size Selection Modal */}
+        <div
+          className="modal fade"
+          id="sizeModal"
+          tabIndex="-1"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Select Size</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body text-center">
+                <input type="hidden" id="selectedProductId" />
+                <select id="selectedSize" className="form-select w-50 mx-auto">
+                  <option value="S">Small</option>
+                  <option value="M" selected>
+                    Medium
+                  </option>
+                  <option value="L">Large</option>
+                  <option value="XL">XL</option>
+                </select>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                  onClick={() => {
+                    const pid =
+                      document.getElementById("selectedProductId").value;
+                    const size = document.getElementById("selectedSize").value;
+                    handleSubmit(pid, { qty: 1, size });
+                    showToast();
+                  }}
+                >
+                  Add to Cart
+                </button>
+              </div>
             </div>
           </div>
         </div>

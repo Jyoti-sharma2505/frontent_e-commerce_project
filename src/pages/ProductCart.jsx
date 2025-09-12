@@ -194,9 +194,9 @@ const moveToWishlist = (id, size) => {
                 <span>Total Amount</span>
                 <span>₹{finalAmount}</span>
               </div>
-              <button className="btn btn-primary w-100 mt-3 fw-bold">
+              <Link to="/checkout" className="btn btn-primary w-100 mt-3 fw-bold">
                 Proceed to Checkout
-              </button>
+              </Link>
               <p className="text-muted small text-center mt-2">
                 Safe and Secure Payments. Easy returns.
               </p>

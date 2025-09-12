@@ -25,6 +25,51 @@ export function EcommerceContextProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [listWish, setListWish] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [addresses, setAddresses] = useState([
+  {
+    id: 1,
+    name: "Jyoti Sharma",
+    phone: "9876543210",
+    address: "123, MG Road, Delhi",
+    city: "New Delhi",
+    pincode: "110001",
+    state: "Delhi",
+  },
+]);
+const [selectedAddress, setSelectedAddress] = useState(null);
+
+const [orders, setOrders] = useState([]);
+
+// ➕ Add New Address
+const addAddress = (newAddress) => {
+  setAddresses((prev) => [...prev, { ...newAddress, id: Date.now() }]);
+};
+
+// 🗑️ Remove Address
+const removeAddress = (id) => {
+  setAddresses((prev) => prev.filter((addr) => addr.id !== id));
+};
+
+// ✅ Place Order
+const placeOrder = () => {
+  if (!selectedAddress) {
+    alert("Please select an address!");
+    return;
+  }
+
+  const newOrder = {
+    id: Date.now(),
+    items: cart,
+    total: cart.reduce((acc, item) => acc + item.price * item.add.qty, 0),
+    address: selectedAddress,
+    date: new Date().toLocaleString(),
+  };
+
+  setOrders((prev) => [...prev, newOrder]);
+  setCart([]); // Empty cart after checkout
+  alert("Order Placed Successfully!");
+};
+
 
   useEffect(() => {
     if (data?.getAll) {
@@ -36,29 +81,29 @@ export function EcommerceContextProvider({ children }) {
     }
   }, [data]);
 
- const toggleCategory = (cat) => {
-  if (cat === "All") {
-    // Agar "All" select kiya to sirf "All" rakho
-    setCategory(["All"]);
-  } else {
-    let updated = [];
+//  const toggleCategory = (cat) => {
+//   if (cat === "All") {
+//     // Agar "All" select kiya to sirf "All" rakho
+//     setCategory(["All"]);
+//   } else {
+//     let updated = [];
 
-    if (category.includes(cat)) {
-      // agar already selected hai to remove karo
-      updated = category.filter((c) => c !== cat);
-    } else {
-      // agar nahi hai to add karo
-      updated = [...category.filter((c) => c !== "All"), cat];
-    }
+//     if (category.includes(cat)) {
+//       // agar already selected hai to remove karo
+//       updated = category.filter((c) => c !== cat);
+//     } else {
+//       // agar nahi hai to add karo
+//       updated = [...category.filter((c) => c !== "All"), cat];
+//     }
 
-    // agar sab empty ho gaye to default "All"
-    if (updated.length === 0) {
-      updated = ["All"];
-    }
+//     // agar sab empty ho gaye to default "All"
+//     if (updated.length === 0) {
+//       updated = ["All"];
+//     }
 
-    setCategory(updated);
-  }
-};
+//     setCategory(updated);
+//   }
+// };
 
 
   // ✅ Add/Remove Cart
@@ -256,7 +301,7 @@ const moveToWishlist = (productId) => {
         searchTerm,
         setSearchTerm,
         removeFromWishlist,
-        moveToWishlist
+        moveToWishlist,
         // setCategories,
         // categories
       }}

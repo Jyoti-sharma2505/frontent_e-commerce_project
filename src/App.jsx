@@ -7,6 +7,8 @@ import ProductCart from "./pages/ProductCart";
 import ProductDetails from "./pages/ProductDetails";
 import Whislsit from "./pages/Whislist";
 import ProductList from "./pages/ProductList";
+import Checkout from "./pages/Checkout";
+// import AddressPage from "./pages/AddressPage";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/products/:productId" element={<ProductDetails />} />
           <Route path="/cart" element={<ProductCart />} />
           <Route path="/wishlist" element={<Whislsit/>}/>
+          <Route path="/checkout" element={<Checkout/>}/>
+          {/* <Route path="/addresses" element={<AddressPage/>}/> */}
         </Routes>
       </EcommerceContextProvider>
     </BrowserRouter>
