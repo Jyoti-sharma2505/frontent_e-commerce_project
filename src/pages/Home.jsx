@@ -287,7 +287,6 @@ const Home = () => {
                 src="https://i.pinimg.com/736x/a2/86/63/a28663a49b5c976bc1c4500dec254315.jpg"
                 class="card-img-top"
                 alt="..."
-                style={{height:"764px"}}
               />
             </Link>
             <div class="card-body">
