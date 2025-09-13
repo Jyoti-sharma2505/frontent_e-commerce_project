@@ -8,6 +8,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Whislsit from "./pages/Whislist";
 import ProductList from "./pages/ProductList";
 import Checkout from "./pages/Checkout";
+import UserProfile from "./pages/UserProfil";
 // import AddressPage from "./pages/AddressPage";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/cart" element={<ProductCart />} />
           <Route path="/wishlist" element={<Whislsit/>}/>
           <Route path="/checkout" element={<Checkout/>}/>
+          <Route path="/user" element={<UserProfile/>}/>
           {/* <Route path="/addresses" element={<AddressPage/>}/> */}
         </Routes>
       </EcommerceContextProvider>

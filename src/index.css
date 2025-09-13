@@ -366,3 +366,14 @@
   /* width: 100%;      full width har view me */
 }
 
+/* keep modals centered when using d-block fallback */
+.modal.d-block {
+  display: block;
+  padding-right: 0 !important;
+}
+
+.modal .modal-dialog {
+  max-width: 650px;
+}
+
+

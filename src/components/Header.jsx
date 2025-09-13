@@ -84,7 +84,8 @@ const Header = () => {
 
             {/* Right icons */}
             <div className="ms-lg-3 d-flex align-items-center gap-3 mt-3 mt-lg-0">
-              <i className="bi bi-person-circle fs-4"></i>
+              <Link to="/user"><i className="bi bi-person-circle fs-4" ></i></Link>
+              
 
               <Link to="/wishlist" className="position-relative">
                 <i className="bi bi-heart fs-4"></i>
