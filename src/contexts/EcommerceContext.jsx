@@ -62,6 +62,7 @@ export function EcommerceContextProvider({ children }) {
   ]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [orders, setOrders] = useState([]);
+  console.log(orders,"abc")
 
   // ➕ Add Address
   const addAddress = (newAddress) => {

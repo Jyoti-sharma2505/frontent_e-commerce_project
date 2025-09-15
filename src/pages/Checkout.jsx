@@ -40,7 +40,7 @@ const Checkout = () => {
 
     setOrderSuccess(true);
   };
-  console.log(handlePlaceOrder,"ab")
+//   console.log(handlePlaceOrder,"ab")
 
   return (
     <>
