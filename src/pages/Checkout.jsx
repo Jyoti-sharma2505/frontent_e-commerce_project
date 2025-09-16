@@ -3,6 +3,7 @@ import { useEcommerceContext } from "../contexts/EcommerceContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Checkout = () => {
   const { cart, addresses, placeOrder } = useEcommerceContext();
@@ -27,7 +28,7 @@ const Checkout = () => {
 
   const handlePlaceOrder = () => {
     if (!selectedAddress) {
-      alert("Please select an address!");
+        toast.error("⚠️ Please select an address before placing the order!");
       return;
     }
 
@@ -45,6 +46,7 @@ const Checkout = () => {
   return (
     <>
       <Header />
+      <ToastContainer />
       <div className="container my-3">
         <h3 className="mb-4">Checkout /</h3> <Link to="/">Back to HomePage..</Link>
 
@@ -124,7 +126,9 @@ const Checkout = () => {
                 className="btn btn-success w-100"
                 onClick={handlePlaceOrder}
                 
+                
               >
+                
                 Place Order
               </button>
             </div>

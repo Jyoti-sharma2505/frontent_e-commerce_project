@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
 import "../index.css"; // keep your global styles
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer, toast } from "react-toastify";
 
 const UserProfile = () => {
   const {
@@ -59,7 +60,7 @@ const UserProfile = () => {
   const submitAddAddress = () => {
     // basic validation
     if (!newAddr.name || !newAddr.phone || !newAddr.street) {
-      alert("Please provide name, phone and street.");
+      toast.error("Please provide name, phone and street.");
       return;
     }
     addAddress({
@@ -81,7 +82,7 @@ const UserProfile = () => {
 
   const submitEditAddress = () => {
     if (!editAddr?.name || !editAddr?.phone || !editAddr?.street) {
-      alert("Please provide name, phone and street.");
+      toast.error("Please provide name, phone and street.");
       return;
     }
     // remove original address and add updated one
@@ -114,6 +115,7 @@ const UserProfile = () => {
   return (
     <>
       <Header />
+      <ToastContainer/>
       <main className="container my-9 py-5">
         <div className="row g-4">
           {/* Left: Profile */}
