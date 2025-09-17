@@ -214,6 +214,15 @@ const handlePlaceOrder = () => {
     })
     .filter((product) => product.price <= price)
     .filter((product) => (rating > 0 ? product.rating >= rating : true))
+      .filter((product) => {
+    if (!searchTerm) return true;
+    const lower = searchTerm.toLowerCase();
+    return (
+      product.title?.toLowerCase().includes(lower) ||
+      product.description?.toLowerCase().includes(lower)
+    );
+  })
+
     .sort((a, b) => {
       if (sortBy === "lowToHigh") return a.price - b.price;
       if (sortBy === "highToLow") return b.price - a.price;
