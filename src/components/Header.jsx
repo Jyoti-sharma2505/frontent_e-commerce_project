@@ -46,12 +46,18 @@ const Header = () => {
           </button>
 
           <div
-            className={`collapse navbar-collapse ${isNavCollapsed ? "" : "show"}`}
+            className={`collapse navbar-collapse ${
+              isNavCollapsed ? "" : "show"
+            }`}
           >
             {/* Left nav links */}
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={() => setIsNavCollapsed(true)}>
+                <Link
+                  className="nav-link"
+                  to="/"
+                  onClick={() => setIsNavCollapsed(true)}
+                >
                   Home
                 </Link>
               </li>
@@ -67,7 +73,10 @@ const Header = () => {
             </ul>
 
             {/* Search */}
-            <form className="d-flex my-2 my-lg-0" onSubmit={(e) => e.preventDefault()}>
+            <form
+              className="d-flex my-2 my-lg-0"
+              onSubmit={(e) => e.preventDefault()}
+            >
               <div className="input-group">
                 <input
                   type="search"
@@ -84,8 +93,13 @@ const Header = () => {
 
             {/* Right icons */}
             <div className="ms-lg-3 d-flex align-items-center gap-3 mt-3 mt-lg-0">
-              <Link to="/user"><i className="bi bi-person-circle fs-4" ></i></Link>
-              
+              <Link to="/user">
+                <img
+                  src="https://t4.ftcdn.net/jpg/11/66/06/77/360_F_1166067709_2SooAuPWXp20XkGev7oOT7nuK1VThCsN.jpg"
+                  alt="user"
+                  style={{ height: "40px", width: "40px", borderRadius: "50%" }}
+                />
+              </Link>
 
               <Link to="/wishlist" className="position-relative">
                 <i className="bi bi-heart fs-4"></i>

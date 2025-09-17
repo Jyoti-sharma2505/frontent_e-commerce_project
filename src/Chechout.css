@@ -1,0 +1,85 @@
+.checkout-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Common Card Styling */
+.checkout-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  padding: 16px;
+  height: 100%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.checkout-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Address Radio Section */
+.form-check {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  transition: 0.2s;
+}
+
+.form-check:hover {
+  border-color: #0d6efd;
+  background: #f8faff;
+}
+
+.form-check-input {
+  transform: scale(1.2);
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+/* Order Summary */
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 12px 8px;
+  font-size: 15px;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+.list-group-item.fw-bold {
+  font-size: 17px;
+}
+
+/* Place Order Button */
+.place-btn {
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.place-btn:hover {
+  background-color: #218838 !important;
+  transform: scale(1.02);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .checkout-container {
+    padding: 0 10px;
+  }
+
+  .checkout-card {
+    padding: 12px;
+  }
+
+  .place-btn {
+    font-size: 15px;
+    padding: 10px;
+  }
+}

@@ -87,7 +87,7 @@
 }
 
 .custom-card h6 {
-  margin-top: 4px;
+  margin-top: 8px;
   font-size: 1rem;
   font-weight: 500;
 }
@@ -296,7 +296,7 @@
 /* ---------------------- MOBILE FIXES ---------------------- */
 @media (max-width: 768px) {
   .row.row-cols-1.row-cols-md-2.g-4 .card {
-    height: 200px; /* mobile me thoda chota */
+    height: 220px; /* mobile me thoda chota */
   }
 
   .row.row-cols-1.row-cols-md-2.g-4 .card-title {
@@ -355,25 +355,5 @@
   margin-bottom: 20px;
 }
 
-/* Product card image ke niche extra gap remove */
-.product-card .img-box {
-  margin-bottom: 0 !important;
-}
-
-/* Button ko thoda upar laye aur full width rakhe */
-.product-card button {
-  margin-top: 8px; /* thoda hi gap */
-  /* width: 100%;      full width har view me */
-}
-
-/* keep modals centered when using d-block fallback */
-.modal.d-block {
-  display: block;
-  padding-right: 0 !important;
-}
-
-.modal .modal-dialog {
-  max-width: 650px;
-}
 
 

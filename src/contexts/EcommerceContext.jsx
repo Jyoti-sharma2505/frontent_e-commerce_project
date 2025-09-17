@@ -17,6 +17,8 @@ export function EcommerceContextProvider({ children }) {
   const [price, setPrice] = useState(5000);
   const [rating, setRating] = useState(null);
   const [sortBy, setSortBy] = useState("relevance");
+   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [orders, setOrders] = useState([]);
 
   // ✅ Cart & Wishlist states (load from localStorage first)
   const [cart, setCart] = useState(() => {
@@ -31,48 +33,55 @@ export function EcommerceContextProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   // ✅ Address + Orders (as before)
-  const [addresses, setAddresses] = useState([
-    {
-      id: 1,
-      name: "Jyoti Sharma",
-      phone: "9876543210",
-      address: "123, MG Road, Delhi",
-      city: "New Delhi",
-      pincode: "110001",
-      state: "Delhi",
-    },
-     {
-      id: 2,
-      name: "Rohan Sharma",
-      phone: "9876543210",
-      address: "1234, MG Road, Mumbai",
-      city: "Mumbai",
-      pincode: "110001",
-      state: "Mumbai",
-    },
-     {
-      id: 3,
-      name: "Kanchan",
-      phone: "9876543210",
-      address: "123, MG Road, Delhi",
-      city: "New Delhi",
-      pincode: "110001",
-      state: "Delhi",
-    },
-  ]);
-  const [selectedAddress, setSelectedAddress] = useState(null);
-  const [orders, setOrders] = useState([]);
-  console.log(orders,"abc")
 
-  // ➕ Add Address
-  const addAddress = (newAddress) => {
-    setAddresses((prev) => [...prev, { ...newAddress, id: Date.now() }]);
-  };
+// ✅ Address + Orders
+const [addresses, setAddresses] = useState(() => {
+  const savedAddresses = localStorage.getItem("addresses");
+  return savedAddresses
+    ? JSON.parse(savedAddresses)
+    : [
+        {
+          id: 1,
+          name: "Jyoti Sharma",
+          phone: "9876543210",
+          address: "123, MG Road, Delhi",
+          city: "New Delhi",
+          pincode: "110001",
+          state: "Delhi",
+        },
+          {
+          id: 2,
+          name: "Rohit Sharma",
+          phone: "9876543210",
+          address: "123, MG Road, Delhi",
+          city: "New Delhi",
+          pincode: "110001",
+          state: "Delhi",
+        },
+          {
+          id: 3,
+          name: "Rahul Sharma",
+          phone: "9876543210",
+          address: "123, MG Road, Delhi",
+          city: "New Delhi",
+          pincode: "110001",
+          state: "Delhi",
+        },
+      ];
+});
+console.log(addresses)
 
-  // 🗑️ Remove Address
-  const removeAddress = (id) => {
-    setAddresses((prev) => prev.filter((addr) => addr.id !== id));
-  };
+useEffect(() => {
+  localStorage.setItem("addresses", JSON.stringify(addresses));
+}, [addresses]);
+
+const addAddress = (newAddress) => {
+  setAddresses((prev) => [...prev, { ...newAddress, id: Date.now() }]);
+};
+
+const removeAddress = (id) => {
+  setAddresses((prev) => prev.filter((addr) => addr.id !== id));
+};
 
   // ✅ Place Order
 const placeOrder = (orderData) => {

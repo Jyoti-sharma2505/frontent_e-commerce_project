@@ -1,0 +1,94 @@
+/* ===== PROFILE CARD ===== */
+.profile-card {
+  border: none;
+  border-radius: 14px;
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.profile-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+  box-shadow: 0 0 8px rgba(0,0,0,0.15);
+}
+
+.profile-card h5 {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.profile-card p {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* ===== ADDRESS CARD ===== */
+.address-card {
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 15px;
+  height: 100%;
+  transition: 0.3s ease;
+  background: #fff;
+}
+
+.address-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.address-card.selected {
+  border: 2px solid #0d6efd;
+}
+
+.address-card h6 {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.address-card small {
+  color: #6c757d;
+}
+
+/* ===== ORDER CARD ===== */
+.order-card {
+  border-left: 4px solid #198754;
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  transition: box-shadow 0.3s ease;
+}
+
+.order-card:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+
+.order-card .fw-semibold {
+  font-weight: 600;
+}
+
+/* ===== MODAL FIX ===== */
+.modal-content {
+  border-radius: 14px;
+}
+
+.modal-header {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.modal-footer {
+  border-top: 1px solid #f1f1f1;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .profile-card {
+    margin-bottom: 20px;
+  }
+}

@@ -5,8 +5,8 @@ import useFetch from "../useFetch";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Footer from "../components/Footer";
-import { useEffect, useState } from "react";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
+import "../index.css";
 
 const brands = [
   "https://varkala-react-2.vercel.app/img/brand/brand-3.svg",
@@ -281,7 +281,7 @@ const Home = () => {
             <Link
               to="/products"
               state={{ categoryName: "Women" }}
-              onClick={() => setCategory("Women")}
+              onClick={() => setCategory(["Women"])}
             >
               <img
                 src="https://i.pinimg.com/736x/a2/86/63/a28663a49b5c976bc1c4500dec254315.jpg"
@@ -304,7 +304,7 @@ const Home = () => {
             <Link
               to="/products"
               state={{ categoryName: "Men" }}
-              onClick={() => setCategory("Men")}
+              onClick={() => setCategory(["Men"])}
             >
               <img
                 src="https://i.pinimg.com/736x/81/f6/90/81f690c81b28dec84730a4cc445f5ac4.jpg"

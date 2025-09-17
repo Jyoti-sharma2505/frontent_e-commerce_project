@@ -3,9 +3,8 @@ import "../index.css";
 import { Link, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// import { useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
-import "../index.css";
 
 const ProductList = () => {
   const {
@@ -20,27 +19,30 @@ const ProductList = () => {
     setRating,
     sortBy,
     handleWish,
-    // categories,
-    // setCategories,
     setSortBy,
   } = useEcommerceContext();
-  // const [categories, setCategories] = useState([]);
+
+  const location = useLocation();
+
+  // ✅ Home se category aaye to setCategory update karo
+  useEffect(() => {
+    if (location.state?.category) {
+      setCategory([location.state.category]);
+    }
+  }, [location, setCategory]);
+
   const toggleCategory = (cat) => {
     if (cat === "All") {
-      // Agar "All" select kiya to sirf "All" rakho
       setCategory(["All"]);
     } else {
       let updated = [];
 
       if (category.includes(cat)) {
-        // agar already selected hai to remove karo
         updated = category.filter((c) => c !== cat);
       } else {
-        // agar nahi hai to add karo
-        updated = [...category.filter((c) => c !== "All"), cat];
+        updated = [...category?.filter((c) => c !== "All"), cat];
       }
 
-      // agar sab empty ho gaye to default "All"
       if (updated.length === 0) {
         updated = ["All"];
       }
@@ -199,27 +201,31 @@ const ProductList = () => {
                     </div>
 
                     <div className=" text-center">
-                      <h5 >{list?.name}</h5>
+                      <h5>{list?.name}</h5>
                       <p className="text-muted mb-1">Rs {list?.price}</p>
-                      
+
                       <div>
-    <div className="d-flex justify-content-center">
-      {Array.from({ length: 5 }, (_, i) => {
-        const starValue = i + 1;
-        return (
-          <span
-            key={i}
-            className={`bi ${
-              list?.rating >= starValue
-                ? "bi-star-fill"
-                : "bi-star"
-            }`}
-            style={{ fontSize: "1rem", color: "#ffc107", cursor: "pointer" }}
-          ></span>
-        );
-      })}
-    </div>
-    </div>
+                        <div className="d-flex justify-content-center">
+                          {Array.from({ length: 5 }, (_, i) => {
+                            const starValue = i + 1;
+                            return (
+                              <span
+                                key={i}
+                                className={`bi ${
+                                  list?.rating >= starValue
+                                    ? "bi-star-fill"
+                                    : "bi-star"
+                                }`}
+                                style={{
+                                  fontSize: "1rem",
+                                  color: "#ffc107",
+                                  cursor: "pointer",
+                                }}
+                              ></span>
+                            );
+                          })}
+                        </div>
+                      </div>
 
                       <button
                         onClick={() => handleSubmit(list?._id)}

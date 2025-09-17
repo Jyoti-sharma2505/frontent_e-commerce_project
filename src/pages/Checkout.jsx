@@ -3,7 +3,8 @@ import { useEcommerceContext } from "../contexts/EcommerceContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
+import "../Chechout.css";
 
 const Checkout = () => {
   const { cart, addresses, placeOrder } = useEcommerceContext();
@@ -18,8 +19,7 @@ const Checkout = () => {
 
   const totalDiscount = cart.reduce(
     (sum, item) =>
-      sum +
-      ((item.price * (item.discount || 0)) / 100) * (item.add?.qty || 1),
+      sum + ((item.price * (item.discount || 0)) / 100) * (item.add?.qty || 1),
     0
   );
 
@@ -28,7 +28,7 @@ const Checkout = () => {
 
   const handlePlaceOrder = () => {
     if (!selectedAddress) {
-        toast.error("⚠️ Please select an address before placing the order!");
+      toast.error("⚠️ Please select an address before placing the order!");
       return;
     }
 
@@ -41,14 +41,25 @@ const Checkout = () => {
 
     setOrderSuccess(true);
   };
-//   console.log(handlePlaceOrder,"ab")
+  //   console.log(handlePlaceOrder,"ab")
 
   return (
     <>
       <Header />
       <ToastContainer />
       <div className="container my-3">
-        <h3 className="mb-4">Checkout /</h3> <Link to="/">Back to HomePage..</Link>
+        <div className="container my-5 checkout-container">
+          {" "}
+          {/* Page Header */}{" "}
+          <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            {" "}
+            <h2 className="fw-bold">🛒 Checkout</h2>{" "}
+            <Link to="/" className="btn btn-outline-dark btn-sm">
+              {" "}
+              ← Continue Shopping{" "}
+            </Link>{" "}
+          </div>
+        </div>
 
         {orderSuccess ? (
           <div className="alert alert-success text-center">
@@ -125,10 +136,7 @@ const Checkout = () => {
               <button
                 className="btn btn-success w-100"
                 onClick={handlePlaceOrder}
-                
-                
               >
-                
                 Place Order
               </button>
             </div>
