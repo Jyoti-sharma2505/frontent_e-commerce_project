@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useEcommerceContext } from "../contexts/EcommerceContext";
-import "../UserProfile.css"; // keep your global styles
+import "../Userprofile.css"; // keep your global styles
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 
