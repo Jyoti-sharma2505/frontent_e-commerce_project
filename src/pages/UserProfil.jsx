@@ -99,8 +99,7 @@ const UserProfile = () => {
   };
 
   const handleDelete = (id) => {
-    if (!toast.error("Are you sure you want to delete this address?"))
-      return;
+    if (!toast.error("Are you sure you want to delete this address?")) return;
     removeAddress(id);
     if (selectedAddress === id) setSelectedAddress(null);
   };
@@ -230,8 +229,9 @@ const UserProfile = () => {
                         <small className="text-muted">{ord.date}</small>
                         <ul className="mt-2 small">
                           {ord.items?.map((it) => (
-                            <li key={it._id}>
-                              {it.name} × {it.qty} — ₹{it.price * it.qty}
+                            <li key={it._id} className="small">
+                              {it.name} × {it.add?.qty || it.qty} — ₹{" "}
+                              {it.price * (it.add?.qty || it.qty || 1)}{" "}
                             </li>
                           ))}
                         </ul>

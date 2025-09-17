@@ -9,6 +9,7 @@ export function EcommerceContextProvider({ children }) {
   const { data, loading, error } = useFetch(
     "https://backend-e-commerce-project.vercel.app/products"
   );
+ 
 
   const location = useLocation();
   const categoryFilter = location.state?.categoryName || "All";
@@ -19,6 +20,7 @@ export function EcommerceContextProvider({ children }) {
   const [sortBy, setSortBy] = useState("relevance");
    const [selectedAddress, setSelectedAddress] = useState(null);
   const [orders, setOrders] = useState([]);
+   
 
   // ✅ Cart & Wishlist states (load from localStorage first)
   const [cart, setCart] = useState(() => {
@@ -69,7 +71,7 @@ const [addresses, setAddresses] = useState(() => {
         },
       ];
 });
-console.log(addresses)
+
 
 useEffect(() => {
   localStorage.setItem("addresses", JSON.stringify(addresses));
@@ -113,7 +115,7 @@ const handlePlaceOrder = () => {
 
   setOrderSuccess(true);
 };
-console.log(handlePlaceOrder)
+
 
 
 
